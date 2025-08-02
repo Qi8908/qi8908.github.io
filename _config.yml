@@ -33,13 +33,14 @@ github:
 
 social:
   name: Qi
-    email: rachelberlin1989@gmail.com # change to your email address
-    links:
-      # The first element serves as the copyright owner's link
-      - https://twitter.com/username # change to your Twitter homepage
-      - https://qi8908.github.io/ # change to your GitHub homepage
-      # Uncomment below to add more social links
-      # - https://www.facebook.com/username
+  email: xxx@gmail.com
+  links:
+    - name: GitHub
+      icon: fab fa-github
+      url: https://github.com/qi8908
+    - name: LinkedIn
+      icon: fab fa-linkedin
+      url: https://www.linkedin.com/in/qi-ren-06440324b/
 
 # Site Verification Settings
 webmaster_verifications:
