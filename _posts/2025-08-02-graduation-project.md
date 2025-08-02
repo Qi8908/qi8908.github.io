@@ -1,12 +1,10 @@
 ---
-title: "Graduation Project: The Murder at Qingliu Manor - A Detective Mystery Game"
+title: "Graduation Project: The Murder at Qingliu Manor"
 date: 2025-08-02 14:00:00 +0800
-categories: [Game Development, Graduation Project]
-tags: [Unity, Game Design, Mystery Game, Detective, Graduation Work]
-author: Qi8908
-pin: true
-toc: true
+categories: [Game Development, C#]
+tags: [Unity, Game Design, C#]
 image: "/assets/graduation-project.png"
+published: false
 ---
 
 # The Murder at Qingliu Manor - My Graduation Project
