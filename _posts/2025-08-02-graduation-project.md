@@ -6,7 +6,7 @@ tags: [Unity, Game Design, Mystery Game, Detective, Graduation Work]
 author: Qi8908
 pin: true
 toc: true
-image: image: "/assets/graduation-project.png"
+image: "/assets/graduation-project.png"
 ---
 
 # The Murder at Qingliu Manor - My Graduation Project
