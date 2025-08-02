@@ -32,17 +32,15 @@ github:
 #   username: twitter_username # change to your Twitter username
 
 social:
-  # Change to your full name.
-  # It will be displayed as the default author of the posts and the copyright owner in the Footer
   name: Qi
-  email: rachelberlin1989@gmail.com # change to your email address
+  email: rachelberlin1989@gmail.com
   links:
-    # The first element serves as the copyright owner's link
-    - https://www.linkedin.com/in/qi-ren-06440324b/ # change to your Twitter homepage
-    - https://qi8908.github.io/ # change to your GitHub homepage
-    # Uncomment below to add more social links
-    # - https://www.facebook.com/username
-
+    - name: LinkedIn
+      icon: fab fa-linkedin
+      url: https://www.linkedin.com/in/qi-ren-06440324b/
+    - name: GitHub
+      icon: fab fa-github
+      url: https://github.com/qi8908
 
 # Site Verification Settings
 webmaster_verifications:
