@@ -26,13 +26,9 @@ published: true
 ### 🎨 Technical Implementation
 - **Engine**: Unity
 - **Programming Language**: C#
-- **Art Style**: [Describe your art style here]
-- **Platform**: macOS
+- **Platform**: macOS Windows
 
 ## Development Journey
-
-### Project Background
-[Share why you chose to create a mystery game, your inspiration sources, etc.]
 
 ### Design Philosophy
 The game aims to create an immersive detective experience where players feel like real investigators. Every clue matters, and logical deduction is key to solving the case.
@@ -45,11 +41,11 @@ During development, I encountered several challenges:
 - **Save System**: Ensuring players could save their progress at any point
 
 ### Development Timeline
-- **Pre-production** (Month 1-2): Concept design, story writing, and initial planning
+- **Pre-production** (Month 2): Concept design, story writing, and initial planning
 - **Prototype Development** (Month 3-4): Core gameplay mechanics implementation
 - **Art Production** (Month 5-6): Scene design, character art, and UI creation
-- **System Integration** (Month 7-8): Feature completion and bug fixing
-- **Polish & Release** (Month 9): Performance optimization and final packaging
+- **System Integration** (Month 7): Feature completion and bug fixing
+- **Polish & Release** (Month 7): Performance optimization and final packaging
 
 ## Project Highlights
 
@@ -130,35 +126,9 @@ If I were to revisit this project, I would:
 
 ## Screenshots
 
-[Add your game screenshots here - showing key scenes, UI, and gameplay moments]
+![Capture1](/post-img/graduation-project/Cap1.png){: width="80%"} <br />
+![Capture2](/post-img/graduation-project/Cap2.png){: width="80%"} <br />
+![Capture3](/post-img/graduation-project/Cap3.png){: width="80%"} <br />
+![Capture4](/post-img/graduation-project/Cap4.png){: width="80%"} <br />
+![Capture5](/post-img/graduation-project/Cap5.png){: width="80%"} <br />
 
-## Try It Out!
-
-I invite you to play my graduation project and experience the mystery firsthand!
-
-**Download**: [The Murder at Qingliu Manor on itch.io](https://pumpkincaptain.itch.io/the-murder-at-qingliu-manor-macos)
-
-**System Requirements:**
-- macOS 10.12 or later
-- 2GB RAM minimum
-- 500MB available storage
-
-## Feedback Welcome
-
-If you play the game, I'd love to hear your thoughts! Please leave comments below about:
-- Your favorite puzzle or moment
-- Any bugs or issues you encountered
-- Suggestions for improvements
-- Your overall experience
-
----
-
-*This project represents my growth as a game designer and technical artist. It's my first step into the game industry, and I'm excited to continue creating engaging interactive experiences. Thank you to everyone who takes the time to play and provide feedback!*
-
-## Contact & Connect
-
-Feel free to reach out if you have questions about the development process or want to discuss game design!
-
-- **Email**: [Your email]
-- **LinkedIn**: [Your LinkedIn profile]
-- **Portfolio**: [Your portfolio website]
