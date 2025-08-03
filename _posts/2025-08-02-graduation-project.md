@@ -13,7 +13,9 @@ published: true
 
 **The Murder at Qingliu Manor** is my graduation project - a detective mystery adventure game where players take on the role of an investigator solving a puzzling murder case in the mysterious Qingliu Manor.
 
-🎮 **Play the game**: [itch.io Page](https://pumpkincaptain.itch.io/the-murder-at-qingliu-manor-windows)
+🎮 **Play the game**: 
+Windows: [itch.io Page](https://pumpkincaptain.itch.io/the-murder-at-qingliu-manor-windows)
+MacOS: [itch.io Page](https://pumpkincaptain.itch.io/the-murder-at-qingliu-manor-macos)
 
 ## Game Features
 
