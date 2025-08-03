@@ -290,17 +290,10 @@ private string GenerateDataPath(int index)
 - **User Experience**: The importance of intuitive controls and clear feedback
 
 ### Challenges Overcome
-- **Balancing Difficulty**: Making puzzles challenging but not frustrating
-- **Performance Optimization**: Ensuring smooth gameplay across different devices
-- **Narrative Coherence**: Maintaining story consistency throughout development
-- **Scope Management**: Learning to prioritize features within time constraints
-
-### Future Improvements
-If I were to revisit this project, I would:
-- Add voice acting for key characters
-- Implement multiple endings based on player choices
-- Create additional case files for extended gameplay
-- Enhance the visual effects and animations
+- **AI Asset Pipeline**: Developing a consistent visual pipeline using AI art generation tools while maintaining artistic coherence and character consistency across different scenes and emotions
+- **Data Management & Serialization**:  Implementing a robust Excel-to-JSON workflow for managing complex narrative scripts, dialogue trees, and game state data with proper error handling and version control
+- **Narrative Pacing & Flow Control**: Balancing story progression with player agency, ensuring optimal pacing between investigation phases, dialogue sequences, and plot revelations to maintain engagement
+- **Educational Content Integration**: Seamlessly weaving historical knowledge cards into the mystery narrative without breaking immersion, creating meaningful connections between educational content and gameplay mechanics
 
 ## Screenshots
 
