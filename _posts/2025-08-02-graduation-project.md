@@ -15,7 +15,7 @@ published: true
 
 🎮 **Play the game**: <br />
 Windows: [itch.io Page](https://pumpkincaptain.itch.io/the-murder-at-qingliu-manor-windows)<br />
-MacOS: [itch.io Page](https://pumpkincaptain.itch.io/the-murder-at-qingliu-manor-macos)<br />
+MacOS: [itch.io Page](https://pumpkincaptain.itch.io/the-murder-at-qingliu-manor-macos)
 
 ## Game Features
 
