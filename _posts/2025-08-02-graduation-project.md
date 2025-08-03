@@ -3,8 +3,8 @@ title: "Graduation Project: The Murder at Qingliu Manor"
 date: 2025-08-02 14:00:00 +0800
 categories: [Game Development, C#]
 tags: [Unity, Game Design, C#]
-image: "/assets/graduation-project.png"
-published: false
+image: "/post-img/graduation-project/Cover.png"
+published: true
 ---
 
 # The Murder at Qingliu Manor - My Graduation Project
