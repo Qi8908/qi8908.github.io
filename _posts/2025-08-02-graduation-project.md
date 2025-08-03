@@ -13,7 +13,9 @@ published: true
 
 **The Murder at Qingliu Manor** is my graduation project - a detective mystery adventure game where players take on the role of an investigator solving a puzzling murder case in the mysterious Qingliu Manor.
 
-🎮 **Play the game**: [itch.io Page](https://pumpkincaptain.itch.io/the-murder-at-qingliu-manor-windows)
+🎮 **Play the game**: <br />
+Windows: [itch.io Page](https://pumpkincaptain.itch.io/the-murder-at-qingliu-manor-windows)<br />
+MacOS: [itch.io Page](https://pumpkincaptain.itch.io/the-murder-at-qingliu-manor-macos)
 
 ## Game Features
 
@@ -26,13 +28,9 @@ published: true
 ### 🎨 Technical Implementation
 - **Engine**: Unity
 - **Programming Language**: C#
-- **Art Style**: [Describe your art style here]
-- **Platform**: macOS
+- **Platform**: macOS Windows
 
 ## Development Journey
-
-### Project Background
-[Share why you chose to create a mystery game, your inspiration sources, etc.]
 
 ### Design Philosophy
 The game aims to create an immersive detective experience where players feel like real investigators. Every clue matters, and logical deduction is key to solving the case.
@@ -45,11 +43,11 @@ During development, I encountered several challenges:
 - **Save System**: Ensuring players could save their progress at any point
 
 ### Development Timeline
-- **Pre-production** (Month 1-2): Concept design, story writing, and initial planning
+- **Pre-production** (Month 2): Concept design, story writing, and initial planning
 - **Prototype Development** (Month 3-4): Core gameplay mechanics implementation
 - **Art Production** (Month 5-6): Scene design, character art, and UI creation
-- **System Integration** (Month 7-8): Feature completion and bug fixing
-- **Polish & Release** (Month 9): Performance optimization and final packaging
+- **System Integration** (Month 7): Feature completion and bug fixing
+- **Polish & Release** (Month 7): Performance optimization and final packaging
 
 ## Project Highlights
 
@@ -78,32 +76,210 @@ The game includes various types of puzzles:
 
 ## Technical Details
 
-### System Architecture
+### Code Architecture
 ```
-Game Architecture:
-├── Scene Management System
-├── Dialogue System
-├── Inventory & Evidence System
-├── Save/Load System
-├── Audio Manager
+Code Architecture:
+├── VNManager.cs
+├── Constants.cs
+├── ExcelReader.cs
+├── TypewriterEffect.cs
+├── MenuManager.cs
+├── GalleryManager.cs
+├── HistoryManager.cs
+├── MapManager.cs
+├── SuspectManager.cs
+├── SaveLoadManager.cs
+├── ButtonHighlighter.cs
+├── ScreenShotter.cs
 └── UI Management
 ```
 
 ### Core Features Implementation
 ```csharp
-// Example: Evidence Collection System
-public class EvidenceManager : MonoBehaviour
+// Choice System - Dynamic dialogue branching
+void ShowChoices()
 {
-    public List<Evidence> collectedEvidence;
-    
-    public void CollectEvidence(Evidence evidence)
+    // Clear existing choice buttons
+    foreach (var button in currentChoiceButtons)
     {
-        if (!collectedEvidence.Contains(evidence))
+        Destroy(button.gameObject);
+    }
+    currentChoiceButtons.Clear();
+
+    choicePanel.SetActive(true);
+    SetGameButtonsInteractable(false);
+
+    // Parse choice data from Excel
+    List<string> choiceTexts = new List<string>();
+    List<string> jumpFiles = new List<string>();
+
+    int lineIndex = currentLine;
+    while (lineIndex < storyData.Count)
+    {
+        var data = storyData[lineIndex];
+        
+        if (lineIndex > currentLine && !string.IsNullOrEmpty(data.speakerName))
+            break;
+
+        if (!string.IsNullOrEmpty(data.speakingContent) && !string.IsNullOrEmpty(data.avatarImageFileName))
         {
-            collectedEvidence.Add(evidence);
-            UIManager.Instance.UpdateEvidenceDisplay();
+            choiceTexts.Add(data.speakingContent);
+            jumpFiles.Add(data.avatarImageFileName);
+        }
+        lineIndex++;
+    }
+
+    // Create interactive choice buttons
+    for (int i = 0; i < choiceTexts.Count; i++)
+    {
+        int choiceIndex = i;
+        Button newButton = Instantiate(choiceButtonPrefab, choicePanel.transform);
+        newButton.GetComponentInChildren<TextMeshProUGUI>().text = choiceTexts[i];
+        newButton.onClick.AddListener(() =>
+        {
+            choicePanel.SetActive(false);
+            SetGameButtonsInteractable(true);
+            InitializeAndLoadStory(jumpFiles[choiceIndex], Constants.DEFAULT_START_LINE);
+        });
+        currentChoiceButtons.Add(newButton);
+    }
+}
+```
+```csharp
+// Investigation System - Core detective gameplay
+void ShowInvestigation()
+{
+    SetGameButtonsInteractable(false);
+    
+    List<string> buttonTexts = new List<string>();
+    List<string> jumpTargets = new List<string>();
+
+    // Parse investigation options from data
+    int lineIndex = currentLine;
+    while (lineIndex < storyData.Count)
+    {
+        var data = storyData[lineIndex];
+        
+        if (lineIndex > currentLine && !string.IsNullOrEmpty(data.speakerName))
+            break;
+
+        if (!string.IsNullOrEmpty(data.speakingContent) && !string.IsNullOrEmpty(data.avatarImageFileName))
+        {
+            buttonTexts.Add(data.speakingContent);
+            jumpTargets.Add(data.avatarImageFileName);
+        }
+        lineIndex++;
+    }
+
+    currentLine = lineIndex;
+
+    // Setup investigation buttons dynamically
+    for (int i = 0; i < investigationButtons.Length; i++)
+    {
+        if (i < buttonTexts.Count)
+        {
+            investigationButtons[i].gameObject.SetActive(true);
+            int index = i;
+            investigationButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = buttonTexts[i];
+            investigationButtons[i].onClick.RemoveAllListeners();
+            investigationButtons[i].onClick.AddListener(() =>
+            {
+                SetGameButtonsInteractable(true);
+                InitializeAndLoadStory(jumpTargets[index], Constants.DEFAULT_START_LINE);
+            });
+        }
+        else
+        {
+            investigationButtons[i].gameObject.SetActive(false);
         }
     }
+
+    investigatePanel.SetActive(true);
+}
+```
+```csharp
+// Save/Load UI Management - Dynamic slot management
+private void UpdateSaveLoadButtons(Button button, int index)
+{
+    button.gameObject.SetActive(true);
+    
+    var savePath = GenerateDataPath(index);
+    var fileExists = File.Exists(savePath);
+    
+    var textComponents = button.GetComponentsInChildren<TextMeshProUGUI>();
+    var image = button.GetComponentInChildren<RawImage>();
+    
+    if (fileExists)
+    {
+        // Existing save: prepare for content loading
+        button.interactable = true;
+        textComponents[0].text = "";
+        textComponents[1].text = (index + 1) + Constants.COLON + Constants.EMPTY_SLOT;
+        image.texture = null;
+    }
+    else
+    {
+        // Empty slot: show placeholder
+        button.interactable = true;
+        textComponents[0].text = "Empty Slot";
+        textComponents[1].text = "";
+        
+        // Load placeholder image from Resources
+        Texture2D placeholder = Resources.Load<Texture2D>(Constants.THUMBNAIL_PATH + Constants.SAVE_PLACEHOLDER);
+        if (placeholder != null)
+        {
+            image.texture = placeholder;
+        }
+    }
+    
+    // Setup click event
+    button.onClick.RemoveAllListeners();
+    button.onClick.AddListener(() => OnButtonClick(button, index));
+}
+```
+```csharp
+// Save Preview System - Screenshot and content display
+private void LoadStorylineAndScreenshots(Button button, int index)
+{
+    var savePath = GenerateDataPath(index);
+    if (File.Exists(savePath))
+    {
+        string json = File.ReadAllText(savePath);
+        var saveData = JsonConvert.DeserializeObject<VNManager.SaveData>(json);
+        
+        // Load and display screenshot thumbnail
+        if (saveData.screenShotData != null)
+        {
+            Texture2D screenShot = new Texture2D(2, 2);
+            screenShot.LoadImage(saveData.screenShotData);
+            button.GetComponentInChildren<RawImage>().texture = screenShot;
+        }
+        
+        // Process and display save content preview
+        if (saveData.savedSpeakingContent != null)
+        {
+            var textComponents = button.GetComponentsInChildren<TextMeshProUGUI>();
+            
+            // Remove color tags and create preview text
+            string cleanedContent = System.Text.RegularExpressions.Regex.Replace(
+                saveData.savedSpeakingContent,
+                @"<color=.*?>|</color>",
+                ""
+            );
+            
+            string shortContent = cleanedContent.Length > 27
+                                    ? cleanedContent.Substring(0, 27) + "..."
+                                    : cleanedContent;
+            
+            textComponents[0].text = shortContent;
+            textComponents[1].text = File.GetLastWriteTime(savePath).ToString("G");
+        }
+    }
+}
+
+private string GenerateDataPath(int index)
+{
+    return Path.Combine(Application.persistentDataPath, Constants.SAVE_FILE_PATH, index + Constants.SAVE_FILE_EXTENSION);
 }
 ```
 
@@ -116,49 +292,16 @@ public class EvidenceManager : MonoBehaviour
 - **User Experience**: The importance of intuitive controls and clear feedback
 
 ### Challenges Overcome
-- **Balancing Difficulty**: Making puzzles challenging but not frustrating
-- **Performance Optimization**: Ensuring smooth gameplay across different devices
-- **Narrative Coherence**: Maintaining story consistency throughout development
-- **Scope Management**: Learning to prioritize features within time constraints
-
-### Future Improvements
-If I were to revisit this project, I would:
-- Add voice acting for key characters
-- Implement multiple endings based on player choices
-- Create additional case files for extended gameplay
-- Enhance the visual effects and animations
+- **AI Asset Pipeline**: Developing a consistent visual pipeline using AI art generation tools while maintaining artistic coherence and character consistency across different scenes and emotions
+- **Data Management & Serialization**:  Implementing a robust Excel-to-JSON workflow for managing complex narrative scripts, dialogue trees, and game state data with proper error handling and version control
+- **Narrative Pacing & Flow Control**: Balancing story progression with player agency, ensuring optimal pacing between investigation phases, dialogue sequences, and plot revelations to maintain engagement
+- **Educational Content Integration**: Seamlessly weaving historical knowledge cards into the mystery narrative without breaking immersion, creating meaningful connections between educational content and gameplay mechanics
 
 ## Screenshots
 
-[Add your game screenshots here - showing key scenes, UI, and gameplay moments]
+![Capture1](/post-img/graduation-project/Cap1.png){: width="80%"} <br />
+![Capture2](/post-img/graduation-project/Cap2.png){: width="80%"} <br />
+![Capture3](/post-img/graduation-project/Cap3.png){: width="80%"} <br />
+![Capture4](/post-img/graduation-project/Cap4.png){: width="80%"} <br />
+![Capture5](/post-img/graduation-project/Cap5.png){: width="80%"} <br />
 
-## Try It Out!
-
-I invite you to play my graduation project and experience the mystery firsthand!
-
-**Download**: [The Murder at Qingliu Manor on itch.io](https://pumpkincaptain.itch.io/the-murder-at-qingliu-manor-macos)
-
-**System Requirements:**
-- macOS 10.12 or later
-- 2GB RAM minimum
-- 500MB available storage
-
-## Feedback Welcome
-
-If you play the game, I'd love to hear your thoughts! Please leave comments below about:
-- Your favorite puzzle or moment
-- Any bugs or issues you encountered
-- Suggestions for improvements
-- Your overall experience
-
----
-
-*This project represents my growth as a game designer and technical artist. It's my first step into the game industry, and I'm excited to continue creating engaging interactive experiences. Thank you to everyone who takes the time to play and provide feedback!*
-
-## Contact & Connect
-
-Feel free to reach out if you have questions about the development process or want to discuss game design!
-
-- **Email**: [Your email]
-- **LinkedIn**: [Your LinkedIn profile]
-- **Portfolio**: [Your portfolio website]
