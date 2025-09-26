@@ -1,16 +1,19 @@
 ---
-title: Procedural Layered Material
+title: Layered Material Implementation: Procedural Wall Surface
 date: 2025-09-26 20:00:00 +0800
 categories: [Graphics, Material]
-image: /post-img/procedural-layered-material/Cover.jpg
-tags: [Unity, Shader, Procedural, Layered Material]
-published: true
+tags: [Unity, Shader, Procedural, Layered Material, Blender]
+image: /post-img/procedural-layered-material/cover.jpg
 ---
+
 ## Visual Result
 
-![Layered Material Animation](/post-img/procedural-layered-material/layered-material.gif)
+### Animated Demonstration
 
-The animation demonstrates the sequential layering process using mask-based blending in Unity. Each frame reveals how masks control the visibility and intensity of different material layers:
+![Layered Material Animation](/post-img/procedural-layered-material/layered-material.gif)
+*Dynamic showcase of mask-based blending: wall base → cracks → moss → snow layers*
+
+The animation demonstrates the sequential layering process using mask-based blending in Blender. Each frame reveals how masks control the visibility and intensity of different material layers:
 
 - **Base Wall**: Clean stone wall foundation
 - **+ Moss**: Green organic growth concentrated in crevices and damp areas
