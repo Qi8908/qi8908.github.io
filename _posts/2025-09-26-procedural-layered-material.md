@@ -8,8 +8,6 @@ image: /post-img/procedural-layered-material/cover.jpg
 
 ## Visual Result
 
-### Animated Demonstration
-
 ![Layered Material Animation](/post-img/procedural-layered-material/layered-material.gif)
 *Dynamic showcase of mask-based blending: wall base → cracks → moss → snow layers*
 
