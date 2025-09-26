@@ -6,8 +6,8 @@ tags: [Unity, PBR, BRDF, Shader, URP]
 ---
 
 ## Shader Comparison
-![Croissant](/post-img/implementing-custom-brdf-shader/BRDF1.png){: width="80%"} <br />
-![Metal Plate](/post-img/implementing-custom-brdf-shader/BRDF2.png){: width="80%"} <br />
+![Croissant](/post-img/implementing-custom-brdf-shader/BRDF1.png){: width="100%"} <br />
+![Metal Plate](/post-img/implementing-custom-brdf-shader/BRDF2.png){: width="100%"} <br />
 
 ## Technical Implementation
 
