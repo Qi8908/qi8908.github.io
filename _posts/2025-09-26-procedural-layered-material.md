@@ -9,7 +9,7 @@ published: true
 
 ## Intro
 
-Before implementing the layered wall material, I explored four primary blending techniques available in modern 3D software:
+Before implementing the layered wall material, I explored four primary blending techniques available in Unity:
 
 ![Four Blend Methods](/post-img/procedural-layered-material/Blend.png)
 
