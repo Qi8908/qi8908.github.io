@@ -7,9 +7,7 @@ tags: [Unity, Layered Material]
 published: true
 ---
 
-## Technical Implementation
-
-### Material Blending Methods
+## Intro
 
 Before implementing the layered wall material, I explored four primary blending techniques available in modern 3D software:
 
@@ -43,6 +41,6 @@ The material system consists of four main layers:
 3. **Snow Layer**: Environmental accumulation on top surfaces, using world-space Y-axis gradient (upward) + noise to create natural buildup on horizontal surfaces
 4. **Crack Layer**: Surface damage and fissures
 
-This mask-driven approach provides precise control while maintaining natural-looking transitions between layers.
+This mask-driven approach provides precise control while maintaining natural-looking transitions between layers. The layered material workflow offers several key advantages: non-destructive editing allows easy adjustments without starting over, procedural generation ensures variation across instances, and the modular system can be reused for different surface types beyond walls.
 
 
