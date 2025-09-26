@@ -5,27 +5,11 @@ categories: [Graphics, Shader]
 tags: [Unity, PBR, BRDF, Shader, URP]
 ---
 
-## Background
-
-During my graphics programming journey, I implemented a custom Physically Based Rendering (PBR) shader from scratch and compared it with Unity's built-in URP Lit Shader.
+## Shader Comparison
+![Croissant](/post-img/implementing-custom-brdf-shader/BRDF1.png){: width="80%"} <br />
+![Metal Plate](/post-img/implementing-custom-brdf-shader/BRDF2.png){: width="80%"} <br />
 
 ## Technical Implementation
 
-### BRDF Model
-- Implemented Cook-Torrance BRDF model
-- Includes Fresnel term, Normal Distribution Function (NDF), and Geometry term
-- Supports metallic-roughness workflow
+## Key Code Snippets
 
-### Key Code Snippets
-```hlsl
-// Core BRDF implementation
-float3 F_Schlick(float3 F0, float cosTheta) {
-    return F0 + (1.0 - F0) * pow(1.0 - cosTheta, 5.0);
-}
-
-float D_GGX(float NoH, float roughness) {
-    float a = roughness * roughness;
-    float a2 = a * a;
-    float denom = (NoH * NoH) * (a2 - 1.0) + 1.0;
-    return a2 / (PI * denom * denom);
-}
