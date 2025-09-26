@@ -1,5 +1,5 @@
 ---
-title: "Graduation Project: The Murder at Qingliu Manor"
+title: "Unity AVG Game: The Murder at Qingliu Manor"
 date: 2025-08-02 14:00:00 +0800
 categories: [Game Development, C#]
 tags: [Unity, Game Design, C#]
