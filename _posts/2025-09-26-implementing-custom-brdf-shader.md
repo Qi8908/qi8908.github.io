@@ -6,7 +6,7 @@ tags: [Unity, PBR, BRDF, Shader, URP]
 image: /post-img/implementing-custom-brdf-shader/Cover1.png
 ---
 
-## Background
+## Intro
 
 During my graphics programming journey, I implemented a custom Physically Based Rendering (PBR) shader from scratch and compared it with Unity's built-in URP Lit Shader. This project deepened my understanding of how light interacts with surfaces and the mathematics behind realistic rendering.
 
