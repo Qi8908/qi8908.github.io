@@ -2,14 +2,23 @@
 title: Custom PBR Shader Implementation
 date: 2025-09-26 15:00:00 +0800
 categories: [Graphics, Shader]
-image: "/post-img/implementing-custom-brdf-shader/Cover.png"
 tags: [Unity, PBR, BRDF, Shader, URP]
-published: true
+image: /post-img/implementing-custom-brdf-shader/Cover1.png
 ---
 
+## Background
+
+During my graphics programming journey, I implemented a custom Physically Based Rendering (PBR) shader from scratch and compared it with Unity's built-in URP Lit Shader. This project deepened my understanding of how light interacts with surfaces and the mathematics behind realistic rendering.
+
 ## Visual Comparison
-![Croissant](/post-img/implementing-custom-brdf-shader/BRDF1.png){: width="100%"} <br />
-![Metal Plate](/post-img/implementing-custom-brdf-shader/BRDF2.png){: width="100%"} <br />
+
+### Croissant Model
+![Croissant Comparison](/post-img/implementing-custom-brdf-shader/BRDF3.png)
+
+### Metal Plate Model
+![Metal Plate Comparison](/post-img/implementing-custom-brdf-shader/BRDF2.png)
+
+The comparison demonstrates how both shaders handle different material properties. The subtle differences in specular highlights and diffuse response reveal the nuances of each implementation.
 
 ## Technical Implementation
 
@@ -26,6 +35,33 @@ Where:
 - **D** = Normal Distribution Function (GGX/Trowbridge-Reitz)
 - **F** = Fresnel equation (Schlick approximation)
 - **G** = Geometry function (Smith's method with Schlick-GGX)
+
+### Multi-Light Support
+
+The shader supports both main directional light and multiple additional lights (point lights, spotlights) for more realistic lighting scenarios:
+
+```hlsl
+// Main Light with shadows
+#ifdef _MAIN_LIGHT_SHADOWS
+    float4 shadowCoord = TransformWorldToShadowCoord(positionWS);
+    Light mainLight = GetMainLight(shadowCoord);
+#else
+    Light mainLight = GetMainLight();
+#endif
+
+// Additional Lights loop
+#ifdef _ADDITIONAL_LIGHTS
+uint pixelLightCount = GetAdditionalLightsCount();
+for (uint i = 0u; i < pixelLightCount; ++i)
+{
+    Light light = GetAdditionalLight(i, positionWS);
+    // Calculate BRDF for each light
+    finalColor += CalculateLighting(light, N, V, ...);
+}
+#endif
+```
+
+Each light source is processed through the same BRDF calculation, with proper distance attenuation and shadow consideration. This allows for dynamic lighting setups with multiple light sources contributing to the final appearance.
 
 ### Implementation Details
 
@@ -123,6 +159,7 @@ The shader uses the metallic-roughness workflow with PBR texture maps:
   - B channel: Metallic (0 = dielectric, 1 = conductor)
 - **Normal Map**: Tangent-space surface details
 
+The multi-light implementation allows for complex lighting scenarios commonly found in indoor environments or scenes requiring multiple dynamic light sources, while maintaining physically-based shading accuracy across all lights.
 
 
 
