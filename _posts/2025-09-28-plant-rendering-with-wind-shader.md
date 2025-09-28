@@ -50,6 +50,7 @@ float heightFactor = pow(input.positionOS.y, 3) * _HeightInfluence;
 ```
 
 #### Vertex Color Control
+![Plant Vertex Color](/post-img/plant-rendering-with-wind-shader/PlantVertexColor.png)
 Artists can paint vertex colors on models to precisely control wind responsiveness in different areas, allowing for detailed animation control without additional geometry.
 
 ### 2. Dual-Sided Rendering
@@ -93,3 +94,4 @@ surfaceInput.scaterringColor = scatterColor * _Scatter * _ScatterColor;
 Integrates spherical harmonics (SH) for accurate global illumination and environmental lighting.
 
 The shader architecture balances visual fidelity with performance optimization, making it suitable for real-time applications while maintaining the natural complexity expected in modern vegetation rendering. Its modular design allows developers to adjust parameters based on specific project requirements, ensuring optimal visual-to-performance ratios across different hardware configurations.
+
