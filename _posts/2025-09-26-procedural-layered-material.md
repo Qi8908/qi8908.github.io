@@ -2,7 +2,7 @@
 title: Layered Material Implementation
 date: 2025-09-26 15:00:00 +0800
 categories: [Graphics, Shader]
-image: "/post-img/procedural-layered-material/Cover.png"
+image: "/post-img/procedural-layered-material/layered-material.gif"
 tags: [Unity, Layered Material]
 published: true
 ---
