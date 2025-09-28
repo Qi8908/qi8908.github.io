@@ -9,7 +9,14 @@ published: true
 
 ## Intro
 
-This project presents a comprehensive vegetation rendering shader built for Unity URP, featuring advanced wind simulation and realistic plant material representation. The shader combines multiple sine functions for dynamic vertex displacement, height-based intensity control, and vertex color influence to create natural swaying effects. Key features include dual-sided rendering with normal reversal using `float vface : VFACE`, alpha clipping for complex plant silhouettes, and physically-based rendering with subsurface scattering simulation.
+This project presents a comprehensive vegetation rendering shader built for Unity URP, 
+featuring advanced wind simulation and realistic plant material representation. 
+
+Key capabilities include:
+- Multi-layered wind system with spatial turbulence and height-based intensity
+- Dual-sided rendering with automatic normal correction
+- Alpha clipping for complex plant silhouettes  
+- PBR lighting with subsurface scattering simulation
 
 ```hlsl
 float3 CalculateWind(float3 positionOS, float heightFactor, float time)
@@ -94,4 +101,5 @@ surfaceInput.scaterringColor = scatterColor * _Scatter * _ScatterColor;
 Integrates spherical harmonics (SH) for accurate global illumination and environmental lighting.
 
 The shader architecture balances visual fidelity with performance optimization, making it suitable for real-time applications while maintaining the natural complexity expected in modern vegetation rendering. Its modular design allows developers to adjust parameters based on specific project requirements, ensuring optimal visual-to-performance ratios across different hardware configurations.
+
 
