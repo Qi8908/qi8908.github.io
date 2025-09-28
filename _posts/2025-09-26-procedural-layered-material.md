@@ -2,7 +2,7 @@
 title: Layered Material Implementation
 date: 2025-09-26 15:00:00 +0800
 categories: [Graphics, Shader]
-image: "/post-img/procedural-layered-material/layered-material.gif"
+image: "/post-img/procedural-layered-material/Wall.gif"
 tags: [Unity, Layered Material]
 published: true
 ---
@@ -30,7 +30,7 @@ Before implementing the layered wall material, I explored four primary blending 
 - Memory efficient, suitable for terrain systems
 
 ## Visual Result
-![Wall](/post-img/procedural-layered-material/layered-material.gif){: width="100%"} <br />
+![Wall](/post-img/procedural-layered-material/Wall.gif){: width="100%"} <br />
 
 ### Layer Structure
 
