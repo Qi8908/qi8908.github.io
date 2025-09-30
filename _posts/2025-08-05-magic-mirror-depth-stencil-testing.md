@@ -2,7 +2,7 @@
 title: "Magic Mirror Implementation: Depth Testing and Stencil Testing"
 date: 2025-08-05 15:00:00 +0800
 categories: [Graphics, Shader]
-image: "/post-img/magic-mirror-depth-stencil-testing/Cover.jpg"
+image: "/post-img/magic-mirror-depth-stencil-testing/magic-mirror.gif"
 tags: [Unity, Stencil Buffer, Depth Test, Mirror Effect]
 published: true
 ---
@@ -74,6 +74,7 @@ This design separates the real world from the mirror world, allowing the same ty
 ## Summary
 
 A three-layer system: mask marks the region (stencil), skybox provides depth (ZTest Always), content respects both (stencil + depth). Queue ordering ensures proper buffer states at each stage. The dual material system achieves complete separation between the real world and mirror world.
+
 
 
 
