@@ -1,5 +1,5 @@
 ---
-title: "Substance Designer Case: Stylized Materials"
+title: "Substance Designer Cases: Stylized Materials"
 date: 2025-09-30 14:00:00 +0800
 categories: [Materials]
 image: "/post-img/stylized-materials-in-substance-designer/StylizedBricks.png"
@@ -15,9 +15,9 @@ A core principle in these materials is building each layer as an independent, re
 
 Every layer features exposed parameters for:
 
-PBR Properties: Independent control over roughness, metallic, and albedo
-Scale: Adjustable tiling and size
-Distribution: Customizable coverage, density, and placement
+- PBR Properties: Independent control over roughness, metallic, and albedo
+- Scale: Adjustable tiling and size
+- Distribution: Customizable coverage, density, and placement
 
 ## Material 1: Overgrown Brick Wall
 
@@ -26,11 +26,11 @@ Distribution: Customizable coverage, density, and placement
 
 Layers:
 
-Red brick base
-Dirt overlay
-Moss coverage
-Clover patches
-Flowering plants (petals + centers separated)
+- Red brick base
+- Dirt overlay
+- Moss coverage
+- Clover patches
+- Flowering plants (petals + centers separated)
 
 The flowers are built with petals and centers as separate components, allowing independent material properties for each. This means petals can be soft and matte while centers remain glossy and saturated—crucial for achieving the right stylized look.
 
@@ -41,9 +41,9 @@ The flowers are built with petals and centers as separate components, allowing i
 
 Layers:
 
-Irregular stone base
-Dirt accumulation
-Moss growth (same reusable module from Material 1)
+- Irregular stone base
+- Dirt accumulation
+- Moss growth (same reusable module from Material 1)
 
 This material demonstrates the practical benefit of the modular approach—the moss layer is directly reused from the brick material, maintaining consistency while saving development time.
 
