@@ -91,7 +91,7 @@ China's leading MMORPG with 10M+ monthly active users and $7.2B annual revenue (
 [https://jx3.seasungames.cn/](https://jx3.seasungames.cn/?utm_source=jd#/)
 
 **Xiaomi Game Community**  
-Multi-platform gaming distribution hub serving 120M daily active users with $5.8B annual gaming revenue (¥42B)  
+Multi-platform gaming distribution hub serving 120M daily active users with $5.8B annual gaming revenue
 [https://game.xiaomi.com/](https://game.xiaomi.com/)
 
 **Moonlight Blade Mobile**  
