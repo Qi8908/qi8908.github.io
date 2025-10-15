@@ -86,18 +86,14 @@ Hunan University, China | 2008-2012 (First Class Honours)
 
 ## NOTABLE PROJECTS & PLATFORMS
 
-**JX Online 3**  
-China's leading MMORPG with 10M+ monthly active users and $7.2B annual revenue (2024)  
-[https://jx3.seasungames.cn/](https://jx3.seasungames.cn/?utm_source=jd#/)
+**[JX Online 3](https://jx3.seasungames.cn/?utm_source=jd#/)**  
+China's leading MMORPG with 10M+ monthly active users and $7.2B annual revenue (2024)
 
-**Xiaomi Game Community**  
-Multi-platform gaming distribution hub serving 120M daily active users with $5.8B annual gaming revenue
-[https://game.xiaomi.com/](https://game.xiaomi.com/)
+**[Xiaomi Game Community](https://game.xiaomi.com/)**  
+Multi-platform gaming distribution hub serving 120M daily active users with $5.8B annual gaming revenue (¥42B)
 
-**Moonlight Blade Mobile**  
-Premium mobile MMORPG with 45M+ registered users and peak monthly revenue of $500M  
-[https://ty.qq.com/main.html#season](https://ty.qq.com/main.html#season)
+**[Moonlight Blade Mobile](https://ty.qq.com/main.html#season)**  
+Premium mobile MMORPG with 45M+ registered users and peak monthly revenue of $500M
 
-**Tencent Game Community**  
-Tencent official gaming social platform with 1.88M registered users and 310K monthly active users  
-[https://syzs.qq.com/](https://syzs.qq.com/)
+**[Tencent Game Community](https://syzs.qq.com/)**  
+Tencent official gaming social platform with 1.88M registered users and 310K monthly active users
