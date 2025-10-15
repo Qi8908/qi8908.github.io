@@ -34,7 +34,7 @@ English, Chinese
 
 ## PROFESSIONAL EXPERIENCE
 
-### Tencent Interactive Entertainment Group
+### Tencent
 **Game Content Manager** | Shenzhen, China | Sep 2021 – Mar 2023
 
 - Optimized game publishing strategies through SQL-based user behavior analysis and BI visualization (Tableau, Power BI), improving platform engagement metrics across multiple game titles
@@ -53,12 +53,13 @@ English, Chinese
 - Managed content operations producing weekly recommendation series with 8%-23% download conversion rates while aggregating 3,000+ daily content items
 - Led UGC campaigns generating 200+ quarterly submissions and achieved 5M+ push notification reach through cross-platform collaboration
 
-### Momo Technology Company Limited
+### Momo Technology
 **Game Designer** | Beijing, China | Jan 2015 – May 2018
 
 - Managed daily operations for operation-oriented and business simulation mobile games including MoMo Audition, Leisure Westward Journey, and Fantasy House
 - Analyzed user data and feedback to identify product operation and R&D issues, proposing and implementing optimal solutions that improved player retention and engagement
-### Amazing Seasun Games
+  
+### Amazing Seasun Game
 **Game Designer** | Zhuhai, China | Aug 2012 – Dec 2014
 
 - Created comprehensive narrative content for JX Online 3 including 17 core map designs with integrated environmental storytelling and character dialogue systems
