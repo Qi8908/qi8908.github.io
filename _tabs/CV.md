@@ -10,8 +10,6 @@ order: 4
 **LinkedIn:** [www.linkedin.com/in/qi-ren-06440324b](https://www.linkedin.com/in/qi-ren-06440324b)  
 **Portfolio:** [https://qi8908.github.io/](https://qi8908.github.io/)
 
----
-
 ## SUMMARY
 
 **Gaming Industry Experience:** Rich experience in gaming industry, including game publishing at Tencent & Xiaomi official game community and narrative design for online/mobile games (JX Online 3: 10M+ MAU, $7.2B annual revenue; Moonlight Blade Mobile: 45M+ registered users, peak monthly revenue of $500M).
@@ -19,8 +17,6 @@ order: 4
 **Technical Art & Material Creation:** Developed advanced shader programming and game material production skills through Unity URP optimization, procedural texture workflows and PBR material (Substance Designer, Marmoset Toolbag 5).
 
 **Game Development Expertise:** Developed practical skills in game development technologies (Unity 6, Unreal 5), focusing on interactive gameplay systems and rendering.
-
----
 
 ## TECHNICAL SKILLS
 
@@ -31,12 +27,10 @@ Proficient in Unity and C# for interactive gameplay systems, player mechanics, a
 Hands-on experience with HLSL shader development and material creation. Skilled in Unity URP pipeline optimization and cross-platform rendering solutions.
 
 **Software & Tools**  
-Unity, Unreal Engine, Substance Designer, Adobe Photoshop, Adobe Premiere, Blender
+Unity, Unreal Engine, Substance Designer, Adobe Photoshop, Adobe Premiere, Blender，Marmoset Toolbag
 
 **Languages**  
 English, Chinese
-
----
 
 ## PROFESSIONAL EXPERIENCE
 
@@ -64,52 +58,46 @@ English, Chinese
 
 - Managed daily operations for operation-oriented and business simulation mobile games including MoMo Audition, Leisure Westward Journey, and Fantasy House
 - Analyzed user data and feedback to identify product operation and R&D issues, proposing and implementing optimal solutions that improved player retention and engagement
-
 ### Amazing Seasun Games
 **Game Designer** | Zhuhai, China | Aug 2012 – Dec 2014
 
 - Created comprehensive narrative content for JX Online 3 including 17 core map designs with integrated environmental storytelling and character dialogue systems
 - Designed 4 content editing systems (life skills, icon, skill, NPC editors) while collaborating with art/music teams on technical requirement documentation
 
----
-
 ## PROJECT
 
-### Visual Novel Adventure Game
+### The Murder at Qingliu Manor
 **Game Developer** | Galway, Ireland | Sep 2024 – Present
 
 Designed and developed a visual novel adventure game in Unity (C#), featuring interactive storytelling, character dialogue systems, branching narrative paths, and dynamic UI elements. Implemented save/load functionality, character management systems, and immersive visual effects to enhance player engagement and narrative experience.
 
-**Tools:** Unity, C#, Git, Dotween, Visual Studio, Adobe Photoshop
+**Tools:** Unity, C#, Git, Dotween, Visual Studio, Adobe Photoshop  
+**Play Game:** [https://pumpkincaptain.itch.io/the-murder-at-qingliu-manor-windows](https://pumpkincaptain.itch.io/the-murder-at-qingliu-manor-windows)
 
----
 
 ## EDUCATION
 
 **MSc, Software Design and Development**  
-University of Galway, Ireland | 2023-2025  
-- Final Grade: 71.67 (First Class Honours)
-- Core Modules: Games Programming (70), Graphics & Image Processing (53), Information Retrieval (66)
-- Research Project and Thesis: 75/100
+University of Galway, Ireland | 2023-2025 (First Class Honours)
 
 **BA, Journalism and Communication**  
-Hunan University, China | 2008
+Hunan University, China | 2008-2012 (First Class Honours)
 
----
 
 ## NOTABLE PROJECTS & PLATFORMS
 
 **JX Online 3**  
-China's leading MMORPG with 10M+ monthly active users and $7.2B annual revenue (2024)
+China's leading MMORPG with 10M+ monthly active users and $7.2B annual revenue (2024)  
+[https://jx3.seasungames.cn/](https://jx3.seasungames.cn/?utm_source=jd#/)
 
 **Xiaomi Game Community**  
-Multi-platform gaming distribution hub serving 120M daily active users with $5.8B annual gaming revenue (¥42B)
+Multi-platform gaming distribution hub serving 120M daily active users with $5.8B annual gaming revenue (¥42B)  
+[https://game.xiaomi.com/](https://game.xiaomi.com/)
 
 **Moonlight Blade Mobile**  
-Premium mobile MMORPG with 45M+ registered users and peak monthly revenue of $500M
+Premium mobile MMORPG with 45M+ registered users and peak monthly revenue of $500M  
+[https://ty.qq.com/main.html#season](https://ty.qq.com/main.html#season)
 
 **Tencent Game Community**  
-Tencent official gaming social platform with 1.88M registered users and 310K monthly active users
-
-**Kuaishou Gaming Platform**  
-Major short-video and live-streaming platform with significant gaming community presence
+Tencent official gaming social platform with 1.88M registered users and 310K monthly active users  
+[https://syzs.qq.com/](https://syzs.qq.com/)
