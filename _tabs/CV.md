@@ -4,8 +4,8 @@ icon: fas fa-info-circle
 order: 4
 ---
 
-# QI REN, Game Designer & Technical Artist MSC
-
+# QI REN, MSC
+### Game Designer & Technical Artist
 **Contact:** +353(87) 471 2776 | rachelberlin1989@gmail.com  
 **LinkedIn:** [www.linkedin.com/in/qi-ren-06440324b](https://www.linkedin.com/in/qi-ren-06440324b)  
 **Portfolio:** [https://qi8908.github.io/](https://qi8908.github.io/)
