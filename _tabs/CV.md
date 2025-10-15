@@ -34,7 +34,7 @@ English, Chinese
 
 ## PROFESSIONAL EXPERIENCE
 
-### Tencent Interactive Entertainment Group
+### <img src = "/images/03_Tencent_English logo.png"> Tencent Interactive Entertainment Group
 **Game Content Manager** | Shenzhen, China | Sep 2021 – Mar 2023
 
 - Optimized game publishing strategies through SQL-based user behavior analysis and BI visualization (Tableau, Power BI), improving platform engagement metrics across multiple game titles
