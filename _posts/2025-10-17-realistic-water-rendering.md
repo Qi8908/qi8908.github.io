@@ -18,8 +18,9 @@ published: true
 - [4. Refraction](#4-refraction)
 - [5. Depth Fade](#5-depth-fade)
 - [6. Caustics](#6-caustics)
-- [7. Foam](#7-foam)
-- [8. Vertex Displacement (Wave)](#8-vertex-displacement-wave)
+- [7. Scatter](#7-scatter)
+- [8. Foam](#8-foam)
+- [9. Vertex Displacement (Wave)](#9-vertex-displacement-wave)
 - [Key Optimizations](#key-optimizations)
 
 ---
@@ -201,7 +202,7 @@ albedo.rgb += caustic;
 
 ---
 
-### 7. Scatter
+## 7. Scatter
 
 **Approach 1: Simplified Reflection-Based Scattering** (Mobile-friendly)
 ```hlsl
@@ -223,7 +224,7 @@ lightingresult.directDiffuse += light.color * light.shadowAttenuation * scatter;
 - Better for deep water and close observation
 - Higher quality with increased performance cost
 
-#### Integration in Lighting Model
+### Integration in Lighting Model
 
 The scattering is integrated into the custom shading model (`ShadingModels.hlsl`):
 ```hlsl
@@ -234,6 +235,7 @@ The scattering is integrated into the custom shading model (`ShadingModels.hlsl`
     // Add to direct diffuse lighting with shadow consideration
     lightingresult.directDiffuse += light.color * light.shadowAttenuation * scatter;
 #endif
+```
 
 ---
 
@@ -296,6 +298,8 @@ Supports underwater observation.
 normalWS *= vface > 0 ? 1 : -1;
 ```
 
+---
+
 ## References
 - Unity URP Documentation
-- Water rendering techniques from [sources]
+- Water rendering techniques
