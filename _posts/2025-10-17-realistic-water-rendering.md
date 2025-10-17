@@ -201,7 +201,43 @@ albedo.rgb += caustic;
 
 ---
 
-## 7. Foam
+### 7. Scatter
+
+**Approach 1: Simplified Reflection-Based Scattering** (Mobile-friendly)
+```hlsl
+// Suitable for shallow water / mobile platforms / distant views
+float3 R = reflect(V, N);
+half3 scatter = SchlickPhase(0.2, dot(-light.direction, R)) * surface_data.scatteringColor;
+```
+- Uses Schlick phase function for forward scattering
+- Performance-friendly for mobile devices
+- Good for lakes and shallow water bodies
+
+**Approach 2: Dedicated SSS Function** (High-quality)
+```hlsl
+// Suitable for deep ocean / PC platforms / close-up views
+half3 scatter = CalculateSSSColor(L, N, V) * surface_data.scatteringColor;
+lightingresult.directDiffuse += light.color * light.shadowAttenuation * scatter;
+```
+- More accurate subsurface scattering calculation
+- Better for deep water and close observation
+- Higher quality with increased performance cost
+
+#### Integration in Lighting Model
+
+The scattering is integrated into the custom shading model (`ShadingModels.hlsl`):
+```hlsl
+#if defined(_WATER)
+    // Calculate SSS based on light, normal, and view directions
+    half3 scatter = CalculateSSSColor(L, N, V) * surface_data.scatteringColor;
+    
+    // Add to direct diffuse lighting with shadow consideration
+    lightingresult.directDiffuse += light.color * light.shadowAttenuation * scatter;
+#endif
+
+---
+
+## 8. Foam
 ![Foam](/post-img/realistic-water-rendering/Foam.gif)
 
 Generate foam at shoreline based on depth.
@@ -220,7 +256,7 @@ albedo += foamBlend.r * _FoamIntensity * foamFactor;
 
 ---
 
-## 8. Vertex Displacement (Wave)
+## 9. Vertex Displacement (Wave)
 ![Water Wave](/post-img/realistic-water-rendering/Wave.png)
 
 Dual-layer noise drives vertex offset to create waves.
