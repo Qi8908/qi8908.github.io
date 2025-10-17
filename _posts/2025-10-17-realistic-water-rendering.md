@@ -25,6 +25,7 @@ published: true
 ---
 
 ## 1. Flow Map
+![Flow Map](/post-img/realistic-water-rendering/ShaderToy.png)
 
 Implements seamless looping flow using dual-layer texture blending to avoid repetition.
 ```hlsl
@@ -54,6 +55,7 @@ half4 color = StandardLighting(lightingInput, surfaceData);
 ---
 
 ## 3. Planar Reflection
+![Reflection](/post-img/realistic-water-rendering/Reflection.gif)
 
 ### C# Script Implementation Steps
 
@@ -177,6 +179,7 @@ half4 albedo = lerp(_DeepColor, _ShallowColor, depthFactor);
 ---
 
 ## 6. Caustics
+![Caustics](/post-img/realistic-water-rendering/Caustics.gif)
 
 RGB channel separation sampling to simulate chromatic dispersion.
 ```hlsl
@@ -199,6 +202,7 @@ albedo.rgb += caustic;
 ---
 
 ## 7. Foam
+![Foam](/post-img/realistic-water-rendering/Foam.gif)
 
 Generate foam at shoreline based on depth.
 ```hlsl
@@ -217,6 +221,7 @@ albedo += foamBlend.r * _FoamIntensity * foamFactor;
 ---
 
 ## 8. Vertex Displacement (Wave)
+![Water Wave](/post-img/realistic-water-rendering/Wave.png)
 
 Dual-layer noise drives vertex offset to create waves.
 ```hlsl
