@@ -298,8 +298,3 @@ Supports underwater observation.
 normalWS *= vface > 0 ? 1 : -1;
 ```
 
----
-
-## References
-- Unity URP Documentation
-- Water rendering techniques
