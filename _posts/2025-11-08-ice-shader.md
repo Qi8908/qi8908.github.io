@@ -1,300 +1,120 @@
 ---
 layout: post
-title: "Realistic Water Rendering"
-date: 2025-10-07
+title: "Ice Shader: Opaque Ice"
+date: 2025-11-08
 categories: [Graphics, Shader]
-image: "/post-img/realistic-water-rendering/WaterRender.jpg"
-tags: [Unity, Water Shader]
+image: "/post-img/ice-shader/Cover.png"
+tags: [Unity, Ice Shader, SSS]
 published: true
 ---
 
 ## Preview
-![Water Rendering Preview](/post-img/realistic-water-rendering/WaterRender.gif)
+![Ice Rendering Preview](/post-img/ice-shader/Cover.png)
 
 ## Main Points
-- [1. Flow Map](#1-flow-map)
-- [2. BRDF Lighting](#2-brdf-lighting)
-- [3. Planar Reflection](#3-planar-reflection)
-- [4. Refraction](#4-refraction)
-- [5. Depth Fade](#5-depth-fade)
-- [6. Caustics](#6-caustics)
-- [7. Scatter](#7-scatter)
-- [8. Foam](#8-foam)
-- [9. Vertex Displacement (Wave)](#9-vertex-displacement-wave)
-- [Key Optimizations](#key-optimizations)
+- [1. Parallax Mapping](#1-parallax-mapping)
+- [2. Subsurface Scattering](#2-subsurface-scattering)
+- [3. MatCap Reflection Enhancement](#3-matcap-reflection-enhancement)
 
 ---
 
-## 1. Flow Map
-![Flow Map](/post-img/realistic-water-rendering/ShaderToy.png)
+This article introduces two approaches to creating ice materials. The first approach is opaque ice, utilizing **Parallax Mapping** to simulate internal depth, **Subsurface Scattering** to represent light penetration effects, and **MatCap Reflection** to enhance surface highlights.
 
-Implements seamless looping flow using dual-layer texture blending to avoid repetition.
+---
+
+## 1. Parallax Mapping
+
+Parallax mapping offsets UV coordinates based on a height map to simulate the three-dimensional structure inside the ice.
+
+### Core Function
 ```hlsl
-// Generate two phases with 0.5 offset for seamless looping
-float speed = _Time.x * _FlowSpeed;
-half phase0 = frac(speed + 0.5);
-half phase1 = frac(speed + 1.0);
-half flowlerp = saturate(abs(0.5 - phase0) / 0.5); 
-
-// Dual-layer normal map interpolation
-half4 normalMap1 = SAMPLE_TEXTURE2D(_BumpMap, sampler_BumpMap, input.worldUV.xy + phase0 * flowDir);
-half4 normalMap2 = SAMPLE_TEXTURE2D(_BumpMap, sampler_BumpMap, input.worldUV.xy + phase1 * flowDir);
-half4 normalBlend1 = lerp(normalMap1, normalMap2, flowlerp);
-```
-
----
-
-## 2. BRDF Lighting
-
-Uses standard PBR pipeline to simulate water's high glossiness and non-metallic properties.
-```hlsl
-surfaceData.metallic = 0;
-surfaceData.smoothness = 0.9;
-half4 color = StandardLighting(lightingInput, surfaceData);
-```
-
----
-
-## 3. Planar Reflection
-![Reflection](/post-img/realistic-water-rendering/Reflection.gif)
-
-### C# Script Implementation Steps
-
-#### Step 1: Create Reflection Camera
-```csharp
-private Camera CreateMirrorObjects()
+half2 BumpOffset(float2 uv, half3 viewDir, half height)
 {
-    var go = new GameObject("Planar Reflections", typeof(Camera));
-    var reflectionCamera = go.GetComponent<Camera>();
-    reflectionCamera.depth = -10;
-    reflectionCamera.enabled = false;
-    return reflectionCamera;
+    half2 offset = (viewDir.xy / viewDir.z) * height;
+    uv = uv + offset;
+    return uv;
 }
 ```
 
-#### Step 2: Calculate Reflection Plane
-```csharp
-// Define reflection plane (water surface position + normal)
-Vector3 pos = target.transform.position + Vector3.up * m_planeOffset;
-Vector3 normal = target.transform.up;
-var d = -Vector3.Dot(normal, pos) - m_settings.m_ClipPlaneOffset;
-var reflectionPlane = new Vector4(normal.x, normal.y, normal.z, d);
+### Implementation
+```hlsl
+// Sample height map
+half height = SAMPLE_TEXTURE2D(_HeightMap, sampler_HeightMap, input.uv * _HeightTiling) * _HeightRange;
+
+// Construct TBN matrix to transform view direction to tangent space
+half3 bitTangentWS = cross(input.normalWS, input.tangentWS.xyz) * input.tangentWS.w;
+half3x3 TBN = half3x3(input.tangentWS.xyz, bitTangentWS, input.normalWS.xyz);
+half3 viewTS = mul(TBN, normalize(input.viewDirWS));
+
+// Calculate offset UV and sample inner texture
+half2 uvOffest = BumpOffset(input.uv * _InnerMapTiling, viewTS, height);
+half4 innerColor = SAMPLE_TEXTURE2D(_InnerMap, sampler_InnerMap, uvOffest);
+half3 albedo = (baseMap.rgb * _BaseColor.rgb + innerColor * _InnerColor) * 0.3;
 ```
 
-#### Step 3: Build Reflection Matrix
-```csharp
-// Calculate reflection matrix based on reflection plane
-private static void CalculateReflectionMatrix(ref Matrix4x4 reflectionMat, Vector4 plane)
-{
-    reflectionMat.m00 = (1F - 2F * plane[0] * plane[0]);
-    reflectionMat.m01 = (-2F * plane[0] * plane[1]);
-    // ... Complete reflection matrix calculation
-    reflectionMat.m11 = (1F - 2F * plane[1] * plane[1]);
-}
+The UV offset is calculated based on view angle and height information to create a depth illusion for inner textures. The TBN matrix is used for coordinate space transformation, and the final multiplication by 0.3 ensures energy conservation.
+
+---
+
+## 2. Subsurface Scattering
+
+Uses thickness maps combined with wrap lighting to simulate light scattering effects inside the ice.
+
+### Property Definitions
+```hlsl
+_ThicknessMap("Thickness Map", 2D) = "white" {}
+_ThicknessScale("Thickness Scale", Range(0, 50)) = 10.0
+_ScatterColor("Scatter Color", Color) = (1,1,1,1)
 ```
 
-#### Step 4: Update Camera Position and Transform
-```csharp
-// Reflection camera position
-var oldPosition = realCamera.transform.position - new Vector3(0, pos.y * 2, 0);
-var newPosition = ReflectPosition(oldPosition);
-_reflectionCamera.transform.position = newPosition;
+### Thickness Sampling
+```hlsl
+half thickness = SAMPLE_TEXTURE2D(_ThicknessMap, sampler_ThicknessMap, input.uv).r * _ThicknessScale;
 
-// Apply reflection matrix to worldToCameraMatrix
-_reflectionCamera.worldToCameraMatrix = realCamera.worldToCameraMatrix * reflection;
+surfaceInput.scatteringColor = _ScatterColor;
+surfaceInput.thickness = thickness;
 ```
 
-#### Step 5: Setup Oblique Projection
-```csharp
-// Calculate clip plane to render only objects above water surface
-var clipPlane = CameraSpacePlane(_reflectionCamera, pos - Vector3.up * 0.1f, normal, 1.0f);
-var projection = realCamera.CalculateObliqueMatrix(clipPlane);
-_reflectionCamera.projectionMatrix = projection;
-```
+The thickness map simulates volume variations across the material. Thinner areas allow light to penetrate more easily with stronger scattering effects, while thicker areas show the opposite behavior.
 
-#### Step 6: Render and Pass Texture
-```csharp
-private void ExecutePlanarReflections(ScriptableRenderContext context, Camera camera)
-{
-    UpdateReflectionCamera(camera);
-    PlanarReflectionTexture(camera); // Create RenderTexture
+### SSS Lighting Calculation
+```hlsl
+#if defined(_ICE)
+    // Wrap lighting
+    half Wrap = 1.2;
+    half WrapNoL = saturate((-dot(N,L) + Wrap) / pow(1+Wrap, 2));
     
-    UniversalRenderPipeline.RenderSingleCamera(context, _reflectionCamera);
+    // Scattering term
+    half VoL = dot(V,L);
+    float Scatter = D_GGX(saturate(-VoL), 0.6 * 0.6);
     
-    // Pass to Shader
-    Shader.SetGlobalTexture(_planarReflectionTextureId, _reflectionTexture);
-}
-```
-
-#### Step 7: Script Settings
-![Water Rendering Preview](/post-img/realistic-water-rendering/Planar Reflection.png)
-
-Do not set Reflect Layers to "Everything". 
-Exclude the water layer (e.g., create a "Water" layer, assign it to the water object, and uncheck it in Reflect Layers) to prevent the water from reflecting itself.
-
-### Using Reflection in Shader
-```hlsl
-// Sample reflection texture with normal distortion
-half2 reflectionDistortion = normalWS.xz * _ReflectionDistortion;
-half4 reflectionColor = SAMPLE_TEXTURE2D(_PlanarReflection, sampler_PlanarReflection, 
-                         screenUV + reflectionDistortion) * _ReflectionIntensity;
-
-surfaceData.reflectionColor = reflectionColor;
-```
-
----
-
-## 4. Refraction
-
-Sample opaque texture with normal-distorted UV.
-```hlsl
-// Distort screen UV based on normal
-half2 distortedUV = screenUV + normalWS.xz * _RefractionStrength;
-
-// Mask to prevent distortion above water surface
-half refractionMask = step(waterDepth, 0);
-distortedUV.xy = refractionMask * screenUV + (1 - refractionMask) * distortedUV;
-
-float3 underWaterColor = SampleSceneColor(distortedUV);
-```
-
----
-
-## 5. Depth Fade
-
-Calculate water depth for color transition.
-```hlsl
-// Get scene depth and water depth
-float sceneDepth = LinearEyeDepth(SampleSceneDepth(screenUV), _ZBufferParams);
-float waterDepth = sceneDepth - input.screenPos.w;
-waterDepth = max(0, waterDepth);
-
-// Depth attenuation
-float depthFactor = saturate(exp2(-waterDepth * _DepthGradient));
-float alphaFactor = 1 - saturate(exp2(-waterDepth * _WaterClean));
-
-// Color blending
-half4 albedo = lerp(_DeepColor, _ShallowColor, depthFactor);
-```
-
----
-
-## 6. Caustics
-![Caustics](/post-img/realistic-water-rendering/Caustics.gif)
-
-RGB channel separation sampling to simulate chromatic dispersion.
-```hlsl
-float causticFactor = saturate(exp2(-waterDepth * _CausticDepth));
-float3 channel_offset = _Channel_Offset * 0.01;
-
-// Sample per channel
-float r1 = SAMPLE_TEXTURE2D(_CausticMap, sampler_CausticMap, 
-           input.worldUV.xy * _CausticTiling + speed * flowDir + channel_offset.x).r;
-float g1 = SAMPLE_TEXTURE2D(_CausticMap, sampler_CausticMap, 
-           input.worldUV.xy * _CausticTiling + speed * flowDir + channel_offset.y).g;
-float b1 = SAMPLE_TEXTURE2D(_CausticMap, sampler_CausticMap, 
-           input.worldUV.xy * _CausticTiling + speed * flowDir + channel_offset.z).b;
-
-// Dual-layer reverse sampling with minimum value
-half3 caustic = min(caustics1, caustics2) * causticFactor;
-albedo.rgb += caustic;
-```
-
----
-
-## 7. Scatter
-
-**Approach 1: Simplified Reflection-Based Scattering** (Mobile-friendly)
-```hlsl
-// Suitable for shallow water / mobile platforms / distant views
-float3 R = reflect(V, N);
-half3 scatter = SchlickPhase(0.2, dot(-light.direction, R)) * surface_data.scatteringColor;
-```
-- Uses Schlick phase function for forward scattering
-- Performance-friendly for mobile devices
-- Good for lakes and shallow water bodies
-
-**Approach 2: Dedicated SSS Function** (High-quality)
-```hlsl
-// Suitable for deep ocean / PC platforms / close-up views
-half3 scatter = CalculateSSSColor(L, N, V) * surface_data.scatteringColor;
-lightingresult.directDiffuse += light.color * light.shadowAttenuation * scatter;
-```
-- More accurate subsurface scattering calculation
-- Better for deep water and close observation
-- Higher quality with increased performance cost
-
-### Integration in Lighting Model
-
-The scattering is integrated into the custom shading model (`ShadingModels.hlsl`):
-```hlsl
-#if defined(_WATER)
-    // Calculate SSS based on light, normal, and view directions
-    half3 scatter = CalculateSSSColor(L, N, V) * surface_data.scatteringColor;
+    // Final transmitted light
+    half3 transmition = light.color * light.shadowAttenuation * WrapNoL * Scatter * 
+                        surface_data.scatteringColor * (1.0 + surface_data.thickness * 3.0);
     
-    // Add to direct diffuse lighting with shadow consideration
-    lightingresult.directDiffuse += light.color * light.shadowAttenuation * scatter;
+    lightingresult.directDiffuse += transmition;
 #endif
 ```
 
----
-
-## 8. Foam
-![Foam](/post-img/realistic-water-rendering/Foam.gif)
-
-Generate foam at shoreline based on depth.
-```hlsl
-float foamFactor = saturate(exp2(-waterDepth * _FoamRange));
-
-// Dual-layer foam blending
-half4 foam1 = SAMPLE_TEXTURE2D(_FoamMap, sampler_FoamMap, 
-              input.worldUV.xy * _FoamTiling1 + flowDir * speed * 2);
-half4 foam2 = SAMPLE_TEXTURE2D(_FoamMap, sampler_FoamMap, 
-              input.worldUV.zw * _FoamTiling2 + flowDir * speed * 2);
-half4 foamBlend = lerp(foam1, foam2, 0.5);
-
-albedo += foamBlend.r * _FoamIntensity * foamFactor;
-```
+Wrap lighting captures backlight penetration effects, while GGX distribution controls the angular distribution of scattering. The thickness parameter directly affects transmitted light intensity: larger thickness values indicate thicker regions where light travels longer distances through internal scattering, resulting in more pronounced scattering effects.
 
 ---
 
-## 9. Vertex Displacement (Wave)
-![Water Wave](/post-img/realistic-water-rendering/Wave.png)
+## 3. MatCap Reflection Enhancement
 
-Dual-layer noise drives vertex offset to create waves.
+Uses pre-rendered spherical maps to simulate environment reflections with minimal performance overhead.
+
+### Implementation
 ```hlsl
-// In vertex shader
-float2 flowDir = _Time.x * float2(_FlowVertexDirX, _FlowVertexDirY);
-float2 offsetUV1 = uv * half2(_HeightTilingX, _HeightTilingY) + flowDir;
-float2 offsetUV2 = (uv + float2(0.4, 0.35)) * 1.6 + flowDir;
+// Transform world space normal to view space
+half3 viewNormal = normalize(TransformWorldToViewDir(normalWS));
 
-// Sample height map
-half height1 = SAMPLE_TEXTURE2D_LOD(_NoiseMap, sampler_NoiseMap, offsetUV1, 0);
-half height2 = SAMPLE_TEXTURE2D_LOD(_NoiseMap, sampler_NoiseMap, offsetUV2, 0);
-half offset = (height1 + height2) * _HeightFactor;
+// Map normal XY components to UV coordinates: [-1,1] → [0,1]
+float2 matcapUV = viewNormal.xy * 0.5 + 0.5;
 
-input.positionOS.xyz += float3(0, offset, 0);
+// Sample and add to albedo
+half3 reflectColor = SAMPLE_TEXTURE2D(_MatCap, sampler_MatCap, matcapUV) * _MatCapIntensity;
+albedo.rgb += reflectColor;
 ```
 
----
-
-## Key Optimizations
-
-### World Space Sampling
-Avoids UV stretching on low-poly meshes.
-```hlsl
-output.worldUV.xy = vertexInput.positionWS.xz * 0.001 * _Tiling1;
-```
-
-### Manual Alpha Blending
-Precise transparency control.
-```hlsl
-color.rgb = color * surfaceData.alpha + (1 - surfaceData.alpha) * underWaterColor;
-```
-
-### Double-Sided Rendering
-Supports underwater observation.
-```hlsl
-normalWS *= vface > 0 ? 1 : -1;
-```
-
+Maps normal directions to UV coordinates to sample a spherical map, simulating environment reflections and highlight effects.
