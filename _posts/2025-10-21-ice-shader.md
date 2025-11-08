@@ -3,13 +3,11 @@ layout: post
 title: "Ice Shader: Opaque Ice"
 date: 2025-11-08
 categories: [Graphics, Shader]
-image: "/post-img/ice-shader/Cover.png"
 tags: [Unity, Ice Shader, SSS]
 published: true
 ---
 
 ## Preview
-![Ice Rendering Preview](/post-img/ice-shader/Cover.png)
 
 ## Main Points
 - [1. Parallax Mapping](#1-parallax-mapping)
