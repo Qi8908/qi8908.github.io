@@ -2,7 +2,7 @@
 title: Layered Material Implementation
 date: 2025-09-26 15:00:00 +0800
 categories: [Graphics, Shader]
-image: "/post-img/procedural-layered-material/Wall_compressed.gif"
+image: "/post-img/procedural-layered-material/BlendFinal.gif"
 tags: [Unity, Layered Material]
 published: true
 ---
@@ -30,7 +30,7 @@ Before implementing the layered wall material, I explored four primary blending 
 - Memory efficient, suitable for terrain systems
 
 ## Visual Result
-![Wall](/post-img/procedural-layered-material/Wall_compressed.gif){: width="100%"} <br />
+![Wall](/post-img/procedural-layered-material/BlendFinal.gif){: width="100%"} <br />
 
 ### Layer Structure
 
@@ -38,9 +38,7 @@ The material system consists of four main layers:
 
 1. **Base Layer**: Basic stone wall surface
 2. **Moss Layer**: Organic growth in crevices and damp areas
-3. **Snow Layer**: Environmental accumulation on top surfaces, using world-space Y-axis gradient (upward) + noise to create natural buildup on horizontal surfaces
-4. **Crack Layer**: Surface damage and fissures
-
-This mask-driven approach provides precise control while maintaining natural-looking transitions between layers. The layered material workflow offers several key advantages: non-destructive editing allows easy adjustments without starting over, procedural generation ensures variation across instances, and the modular system can be reused for different surface types beyond walls.
+3. **Rain Layer**: Rain effects including wetness variation, dripping patterns, and surface darkening in water-exposed areas
+4. **Snow Layer**: Environmental accumulation on top surfaces, using world-space Y-axis gradient (upward) + noise to create natural buildup on horizontal surfaces
 
 
