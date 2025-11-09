@@ -11,14 +11,9 @@ published: true
 ## Opaque Ice Preview
 ![Ice Rendering Preview](/post-img/ice-shader/OpaqueIce.gif)
 
-## Main Points
-- [1. Parallax Mapping](#1-parallax-mapping)
-- [2. Subsurface Scattering](#2-subsurface-scattering)
-- [3. MatCap Reflection Enhancement](#3-matcap-reflection-enhancement)
-
 ---
 
-This article introduces two approaches to creating ice materials. The first approach is opaque ice, utilizing **Parallax Mapping** to simulate internal depth, **Subsurface Scattering** to represent light penetration effects, and **MatCap Reflection** to enhance surface highlights.
+This article introduces two approaches to creating ice materials. The first approach is **opaque ice**, utilizing Parallax Mapping to simulate internal depth, Subsurface Scattering to represent light penetration effects, and MatCap Reflection to enhance surface highlights.
 
 ---
 
@@ -119,17 +114,18 @@ albedo.rgb += reflectColor;
 
 Maps normal directions to UV coordinates to sample a spherical map, simulating environment reflections and highlight effects.
 
+---
+
 ## Transparent Ice Preview
 ![Transparent Ice Preview](/post-img/ice-shader/TransparentIce.gif)
 
-## Main Points
-- [1. Subsurface Scattering](#2-subsurface-scattering)
-- [2. MatCap Reflection Enhancement](#3-matcap-reflection-enhancement)
-- [3. Spiral Blur with Fresnel](#spiral-blur-with-fresnel)
+---
 
-Building on the opaque ice implementation (which covered Parallax Mapping, Subsurface Scattering, and MatCap Reflection), transparent ice adds Screen Space Refraction* and Spiral Blur with Fresnel to create realistic depth and edge softness.
+The second approach is **transparent ice**. Building on the opaque ice implementation (Parallax Mapping, Subsurface Scattering, and MatCap Reflection), transparent ice adds Screen Space Refraction and Spiral Blur with Fresnel to create realistic depth and edge softness.
 
-## Fresnel Function
+---
+
+## 4. Fresnel Function: Edge Blur Reduction
 ```hlsl
 // Fresnel function: reduces blur at ice edges
 half Frenel(half3 n, half3 v, half powIntensity)
@@ -141,10 +137,13 @@ half Frenel(half3 n, half3 v, half powIntensity)
 }
 ```
 
-## Spiral Blur Algorithm
+The Fresnel function is key to achieving realistic ice appearance. It calculates edge intensity based on view angle - at grazing angles, the Fresnel value is higher, which reduces the blur distance at edges. This simulates how ice edges appear sharper due to their thinner cross-section.
+
+---
+
+## 5. Spiral Blur Algorithm
 
 The spiral blur is the core technique for creating the soft, organic refraction effect. It samples the background scene in a spiral pattern, starting from the center and moving outward in circles, with each circle slightly rotated to form a spiral.
-
 ```hlsl
 half4 SpiralBlur(half4 positionCS, int radialSteps, int distanceSteps, half distance)
 {
@@ -190,6 +189,23 @@ half4 SpiralBlur(half4 positionCS, int radialSteps, int distanceSteps, half dist
 }
 ```
 
+### Combining Blur with Fresnel
+```hlsl
+// Calculate Fresnel factor
+half f = 0.2 + Frenel(normalWS, viewNormal, 5);
+
+// Reduce blur distance at edges based on Fresnel
+half distanceWithFrenel = _Distance * (1 - f);
+
+// Apply spiral blur
+half4 sceneColor = SpiralBlur(input.positionCS, 16, 16, distanceWithFrenel);
+
+// Combine with lighting
+color.rgb = color.rgb + sceneColor;
+```
+
+---
+
 ## Key Implementation Notes
 
 ### Render Queue and Blend Mode
@@ -208,10 +224,4 @@ Pass
 }
 ```
 
-**Blend One Zero** is crucial for this shader. It uses additive blending where the source color (ice) is multiplied by 1 and the destination (background) is multiplied by 0, then added together. This means:
-- The final color is: `FinalColor = IceColor * 1 + BackgroundColor * 0 = IceColor`
-- The shader fully replaces the background with its computed color
-- This allows complete control over how the blurred background is mixed with the ice's lighting
-- Without this, standard alpha blending would interfere with the custom blur compositing
-
-The transparent queue ensures proper rendering order, and `Cull off` allows viewing ice from both sides.
+**Blend One Zero** is crucial for this shader. It uses additive blending where the source color (ice) is multiplied by 1 and the destination (background) is multiplied by 0. This allows complete control over how the blurred background is mixed with the ice's lighting, preventing standard alpha blending from interfering with the custom blur compositing.
