@@ -13,7 +13,7 @@ published: true
 
 ---
 
-This article introduces two approaches to creating ice materials. The first approach is **opaque ice**, utilizing Parallax Mapping to simulate internal depth, Subsurface Scattering to represent light penetration effects, and MatCap Reflection to enhance surface highlights.
+The first approach is **opaque ice**, utilizing Parallax Mapping to simulate internal depth, Subsurface Scattering to represent light penetration effects, and MatCap Reflection to enhance surface highlights.
 
 ---
 
