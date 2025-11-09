@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Ice Shader: Opaque & Transparent Ice"
+title: "Ice Shader: Opaque & Transparent"
 date: 2025-11-08
 categories: [Graphics, Shader]
 image: "/post-img/ice-shader/Cover.png"
@@ -118,3 +118,100 @@ albedo.rgb += reflectColor;
 ```
 
 Maps normal directions to UV coordinates to sample a spherical map, simulating environment reflections and highlight effects.
+
+## Transparent Ice Preview
+![Transparent Ice Preview](/post-img/ice-shader/TransparentIce.gif)
+
+## Main Points
+- [1. Subsurface Scattering](#2-subsurface-scattering)
+- [2. MatCap Reflection Enhancement](#3-matcap-reflection-enhancement)
+- [3. Spiral Blur with Fresnel](#spiral-blur-with-fresnel)
+
+Building on the opaque ice implementation (which covered Parallax Mapping, Subsurface Scattering, and MatCap Reflection), transparent ice adds Screen Space Refraction* and Spiral Blur with Fresnel to create realistic depth and edge softness.
+
+## Fresnel Function
+```hlsl
+// Fresnel function: reduces blur at ice edges
+half Frenel(half3 n, half3 v, half powIntensity)
+{
+    half NodtV = saturate(dot(n, v));
+    half f = pow(1.0 - NodtV, powIntensity);
+    f = saturate(f);
+    return f;
+}
+```
+
+## Spiral Blur Algorithm
+
+The spiral blur is the core technique for creating the soft, organic refraction effect. It samples the background scene in a spiral pattern, starting from the center and moving outward in circles, with each circle slightly rotated to form a spiral.
+
+```hlsl
+half4 SpiralBlur(half4 positionCS, int radialSteps, int distanceSteps, half distance)
+{
+    float2 scenePixels = positionCS.xy;
+    
+    // Generate per-pixel random offset
+    float2 randomSample = (uint(scenePixels.x) + 2 * uint(scenePixels.y)) % 5;
+    randomSample = SAMPLE_TEXTURE2D(_NoiseMap, sampler_NoiseMap, randomSample).r;
+    randomSample = randomSample / 5.0 - 0.5;
+    
+    float4 currentColor = 0;
+    float2 baseUV = positionCS.xy / _ScreenParams.xy;
+    float currentDistance = 0;
+    float stepSize = distance / distanceSteps;
+    float tempRotation = randomSample;
+    float tempDistance = stepSize * randomSample;
+    float subStep = 0;
+    float radialOffset = 0.314; // π/10 rotation per circle
+    
+    int i = 0;
+    while (i < distanceSteps)
+    {
+        for (int j = 0; j < radialSteps; j++)
+        {
+            // Calculate spiral offset
+            float2 currentOffset;
+            currentOffset.x = cos(6.28 * (tempRotation + subStep / radialSteps));
+            currentOffset.y = sin(6.28 * (tempRotation + subStep / radialSteps));
+            
+            float2 newUV;
+            newUV.x = baseUV.x + currentOffset.x * (currentDistance + randomSample * tempDistance);
+            newUV.y = baseUV.y + currentOffset.y * (currentDistance + randomSample * tempDistance);
+            
+            currentColor += SAMPLE_TEXTURE2D(_CameraOpaqueTexture, sampler_CameraOpaqueTexture, newUV);
+            subStep++;
+        }
+        currentDistance += stepSize;
+        subStep += radialOffset;
+        i++;
+    }
+    
+    return currentColor / (distanceSteps * radialSteps);
+}
+```
+
+## Key Implementation Notes
+
+### Render Queue and Blend Mode
+```hlsl
+Tags
+{
+    "RenderType" = "Transparent"
+    "RenderPipeline" = "UniversalPipeline"
+    "Queue" = "Transparent"
+}
+
+Pass
+{
+    Cull off
+    Blend One Zero
+}
+```
+
+**Blend One Zero** is crucial for this shader. It uses additive blending where the source color (ice) is multiplied by 1 and the destination (background) is multiplied by 0, then added together. This means:
+- The final color is: `FinalColor = IceColor * 1 + BackgroundColor * 0 = IceColor`
+- The shader fully replaces the background with its computed color
+- This allows complete control over how the blurred background is mixed with the ice's lighting
+- Without this, standard alpha blending would interfere with the custom blur compositing
+
+The transparent queue ensures proper rendering order, and `Cull off` allows viewing ice from both sides.
