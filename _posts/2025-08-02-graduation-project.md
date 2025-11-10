@@ -13,61 +13,36 @@ published: true
 
 **The Murder at Qingliu Manor** is my graduation project - a detective mystery adventure game where players take on the role of an investigator solving a puzzling murder case in the mysterious Qingliu Manor.
 
-🎮 **Play the game**: <br />
+**Play the game**: <br />
 Windows: [itch.io Page](https://pumpkincaptain.itch.io/the-murder-at-qingliu-manor-windows)<br />
 MacOS: [itch.io Page](https://pumpkincaptain.itch.io/the-murder-at-qingliu-manor-macos)
 
 ## Game Features
 
-### 🔍 Core Gameplay
+### Core Gameplay
 - **Detective Investigation**: Collect clues, analyze evidence, and deduce the truth
 - **Interactive Exploration**: Freely explore the carefully designed manor
 - **Character Dialogue**: Interact with various characters to gather crucial information
 - **Logical Reasoning**: Use critical thinking to unravel the mystery
 
-### 🎨 Technical Implementation
+### Technical Implementation
 - **Engine**: Unity
 - **Programming Language**: C#
 - **Platform**: macOS Windows
 
-## Development Journey
-
-### Design Philosophy
-The game aims to create an immersive detective experience where players feel like real investigators. Every clue matters, and logical deduction is key to solving the case.
-
-### Technical Challenges
-During development, I encountered several challenges:
-- **Dialogue System**: Creating a flexible conversation system that could handle complex branching narratives
-- **Inventory Management**: Implementing an intuitive evidence collection and examination system
-- **Scene Transitions**: Seamlessly connecting different areas of the manor
-- **Save System**: Ensuring players could save their progress at any point
-
-### Development Timeline
-- **Pre-production** (Month 2): Concept design, story writing, and initial planning
-- **Prototype Development** (Month 3-4): Core gameplay mechanics implementation
-- **Art Production** (Month 5-6): Scene design, character art, and UI creation
-- **System Integration** (Month 7): Feature completion and bug fixing
-- **Polish & Release** (Month 7): Performance optimization and final packaging
-
 ## Project Highlights
 
-### 🎭 Narrative Design
+### Narrative Design
 The story unfolds in the 1920s at the enigmatic Qingliu Manor, where a wealthy businessman has been found dead under mysterious circumstances. Players must interrogate suspects, each with their own secrets and motives.
 
-**Key Characters:**
-- The victim's family members
-- Household staff
-- Business associates
-- Mysterious guests
-
-### 🏛️ Environmental Design
+### Environmental Design
 The manor features multiple interconnected rooms, each telling part of the story:
 - **Grand Library**: Where crucial documents are hidden
 - **Study Room**: The crime scene with vital evidence
 - **Gardens**: Outdoor areas with additional clues
 - **Servant Quarters**: Revealing the household's secrets
 
-### 🧩 Puzzle Design
+### Puzzle Design
 The game includes various types of puzzles:
 - **Logic Puzzles**: Deductive reasoning challenges
 - **Hidden Object**: Finding crucial evidence in scenes
@@ -282,20 +257,6 @@ private string GenerateDataPath(int index)
     return Path.Combine(Application.persistentDataPath, Constants.SAVE_FILE_PATH, index + Constants.SAVE_FILE_EXTENSION);
 }
 ```
-
-## Development Insights
-
-### What I Learned
-- **Narrative Design**: How to craft engaging mysteries with proper pacing
-- **Unity Proficiency**: Advanced understanding of Unity's systems and workflows
-- **Problem Solving**: Breaking down complex features into manageable components
-- **User Experience**: The importance of intuitive controls and clear feedback
-
-### Challenges Overcome
-- **AI Asset Pipeline**: Developing a consistent visual pipeline using AI art generation tools while maintaining artistic coherence and character consistency across different scenes and emotions
-- **Data Management & Serialization**:  Implementing a robust Excel-to-JSON workflow for managing complex narrative scripts, dialogue trees, and game state data with proper error handling and version control
-- **Narrative Pacing & Flow Control**: Balancing story progression with player agency, ensuring optimal pacing between investigation phases, dialogue sequences, and plot revelations to maintain engagement
-- **Educational Content Integration**: Seamlessly weaving historical knowledge cards into the mystery narrative without breaking immersion, creating meaningful connections between educational content and gameplay mechanics
 
 ## Screenshots
 
