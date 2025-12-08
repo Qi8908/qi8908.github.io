@@ -12,18 +12,14 @@ published: true
 
 In Unity's Universal Render Pipeline (URP), RenderFeature enables custom post-processing effects through a three-stage workflow:
 
-RenderFeature → Initialize Pass parameters and enqueue the Pass
-RenderPass → Receive and configure Shader parameters, then execute the Pass using CommandBuffer (Blit) for rendering. Manage RT allocation: use dedicated RT if needed across multiple passes, otherwise share RT to conserve memory
-Shader → Handle post-processing logic with access to scene color, depth, and other relevant data
+1. RenderFeature → Initialize Pass parameters and enqueue the Pass
+2. RenderPass → Receive and configure Shader parameters, then execute the Pass using CommandBuffer (Blit) for rendering. 
+3. Shader → Handle post-processing logic with access to scene color, depth, and other relevant data
 
 ---
 
-## Exponential Height Fog Preview
+## Fog Preview
 ![Fog Preview](/post-img/exponential-height-fog-post-processing/Fog.gif)
-
----
-
-RenderFeature execution follows three core steps:
 
 ---
 
