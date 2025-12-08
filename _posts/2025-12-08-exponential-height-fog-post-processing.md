@@ -3,18 +3,23 @@ layout: post
 title: "Unity Post-Processing: Exponential Height Fog"
 date: 2025-12-08
 categories: [Graphics, Unity]
+image: "/post-img/exponential-height-fog-post-processing/Cover.png"
 tags: [Unity, URP, RenderFeature, Post-Processing]
 published: true
 ---
 
 ## Overview
 
-In Unity's Universal Render Pipeline (URP), RenderFeature is a powerful extension mechanism that allows developers to inject custom post-processing effects into the rendering pipeline. This article demonstrates how to implement an exponential height fog effect using RenderFeature, covering the complete workflow from initialization to shader execution.
+In Unity's Universal Render Pipeline (URP), RenderFeature enables custom post-processing effects through a three-stage workflow:
+
+RenderFeature → Initialize Pass parameters and enqueue the Pass
+RenderPass → Receive and configure Shader parameters, then execute the Pass using CommandBuffer (Blit) for rendering. Manage RT allocation: use dedicated RT if needed across multiple passes, otherwise share RT to conserve memory
+Shader → Handle post-processing logic with access to scene color, depth, and other relevant data
 
 ---
 
-## RenderFeature Workflow Preview
-![Ice Rendering Preview](/post-img/ice-shader/OpaqueIce.gif)
+## Exponential Height Fog Preview
+![Fog Preview](/post-img/exponential-height-fog-post-processing/Fog.gif)
 
 ---
 
@@ -138,15 +143,6 @@ This approach releases RT at the end of each frame, suitable for simple post-pro
 
 ---
 
-## Exponential Height Fog Preview
-![Ice Rendering Preview](/post-img/ice-shader/OpaqueIce.gif)
-
----
-
-The exponential height fog effect uses depth information and world position reconstruction to create physically-based atmospheric effects. The fog density decreases exponentially with height, creating a natural layered appearance.
-
----
-
 ### Shader Core Logic
 
 ```hlsl
@@ -174,6 +170,7 @@ fogFactor = saturate(fogFactor);
 4. **Distance Control**: Control fog range through `_FogStartDistance` and `_FogMaxDistance`
 
 ### Property Definitions
+![Fog Settings](/post-img/exponential-height-fog-post-processing/SettingCapture.png)
 
 ```csharp
 [System.Serializable]
