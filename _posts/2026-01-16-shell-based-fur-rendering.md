@@ -1,215 +1,147 @@
 ---
 layout: post
-title: "Unity Post-Processing: Exponential Height Fog"
-date: 2025-12-08
+title: "URP Shell-based Fur Rendering"
+date: 2026-01-16
 categories: [Graphics, Unity]
-image: "/post-img/exponential-height-fog-post-processing/Cover.png"
-tags: [Unity, URP, RenderFeature, Post-Processing]
+image: "/post-img/shell-based-fur-rendering/Cover.png"
+tags: [Unity, URP, FurRendering]
 published: true
 ---
 
 ## Overview
 
-In Unity's Universal Render Pipeline (URP), RenderFeature enables custom post-processing effects through a three-stage workflow:
-
-1. RenderFeature → Initialize Pass parameters and enqueue the Pass
-2. RenderPass → Receive and configure Shader parameters, then execute the Pass using CommandBuffer (Blit) for rendering. 
-3. Shader → Handle post-processing logic with access to scene color, depth, and other relevant data
+This post introduces a real-time **Shell-based Fur Rendering** technique implemented in Unity URP. 
+The core idea is to render multiple layers (shells) of the same mesh, each offset along the normal direction, combined with noise-based alpha clipping to simulate individual fur strands. GPU Instancing is used to efficiently render all shell layers in a single draw call batch.
 
 ---
 
-## Fog Preview
-![Fog Preview](/post-img/exponential-height-fog-post-processing/Fog.gif)
+## Fur Preview
+![Fur Preview](/post-img/exponential-height-fog-post-processing/Fog.gif)
 
 ---
 
-## 1. Initialization Phase (Create)
+## 1. Implementation Approach
 
-In the `Create()` method of `ScriptableRendererFeature`:
-- Initialize Pass parameters
-- Call `EnqueuePass` to add the custom Pass to the render queue
+The shell-based method works by stacking multiple copies of the mesh on top of each other. Each layer is pushed outward along the surface normal by a small amount. A noise texture controls which pixels are visible on each layer — pixels near the tips of the fur are progressively clipped away, creating the illusion of tapered fur strands.
+
+The key parameters driving this are:
+- FurStep: a value from 0 to 1 representing which shell layer is being rendered (0 = base, 1 = tip)
+- FurLength: the total length of the fur
+- Noise textures: used to define the shape and density of each strand
+
+---
+
+## 2. Script Implementation
+
+The `FurGenerator` C# script is responsible for generating all shell layers at runtime using `Graphics.DrawMeshInstanced`. Each instance represents one shell layer, with its `_FurStep` value passed via a `MaterialPropertyBlock`.
 
 ### Implementation
+Mesh Acquisition — supports both regular `MeshFilter` and `SkinnedMeshRenderer`:
 ```csharp
-public override void Create()
+MeshFilter meshFilter = GetComponent();
+if (meshFilter != null)
 {
-    fogMaterial = CoreUtils.CreateEngineMaterial("Hidden/ExponentialHeightFog");
-    fogPass = new ExponentialHeightFogPass(fogMaterial);
+    furMesh = meshFilter.sharedMesh;
+}
+else
+{
+    SkinnedMeshRenderer skinnedMesh = GetComponent();
+    if (skinnedMesh != null) furMesh = skinnedMesh.sharedMesh;
 }
 ```
 
-**Key Point**: Use `CoreUtils.CreateEngineMaterial()` to create materials, ensuring they load correctly in both editor and runtime.
-
----
-
-## 2. Parameter Setup Phase (AddRenderPasses)
-
-In the `AddRenderPasses()` method:
-- Receive and set Shader parameters
-- Execute `ExecutePass`, using CommandBuffer (Blit) for rendering
-- Differentiate RT usage scenarios
-
-### Implementation
+Dynamic Instance Count — arrays are re-initialized when `instanceCount` changes:
 ```csharp
-public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
+if (instanceCount != _lastInstanceCount)
 {
-    if (renderingData.cameraData.cameraType == CameraType.Game || 
-        renderingData.cameraData.cameraType == CameraType.SceneView)
-    {
-        fogPass.UpdateParams(
-            settings.fogColor,
-            settings.fogDensity,
-            settings.fogHeightFalloff,
-            settings.fogStartDistance,
-            settings.fogHeight,
-            settings.fogMaxDistance
-        );
-        renderer.EnqueuePass(fogPass);
-    }
+    instanceCount = Mathf.Max(2, instanceCount);
+    matrices = new Matrix4x4[instanceCount];
+    _FurStepArray = new float[instanceCount];
+    _lastInstanceCount = instanceCount;
 }
 ```
 
-**Best Practice**: Limit camera types to avoid executing post-processing on unnecessary cameras (such as preview cameras).
-
----
-
-## 3. Shader Processing Phase (Execute)
-
-This is the actual rendering logic execution phase, primarily handling:
-- Post-processing related logic
-- RT (RenderTexture) allocation and usage strategy
-
-### Implementation
+Per-Instance FurStep — each layer gets a unique `_FurStep` value and shares the same world matrix:
 ```csharp
-public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
+for (int i = 0; i < instanceCount; i++)
 {
-    if (fogMaterial == null) return;
-
-    CommandBuffer cmd = CommandBufferPool.Get("Exponential Height Fog");
-    source = renderingData.cameraData.renderer.cameraColorTargetHandle;
-    
-    // Set material parameters
-    fogMaterial.SetColor("_FogColor", fogColor);
-    fogMaterial.SetFloat("_FogDensity", fogDensity);
-    // ... other parameters
-    
-    // Apply fog effect
-    Blit(cmd, source, tempTexture.Identifier(), fogMaterial);
-    Blit(cmd, tempTexture.Identifier(), source);
-    
-    context.ExecuteCommandBuffer(cmd);
-    CommandBufferPool.Release(cmd);
+    float furStep = (float)i / (instanceCount - 1);
+    _FurStepArray[i] = furStep;
+    matrices[i] = baseWorldMatrix;
 }
+materialPropertyBlock.SetFloatArray("_FurStep", _FurStepArray);
+Graphics.DrawMeshInstanced(furMesh, 0, furMaterial, matrices, instanceCount, materialPropertyBlock, ShadowCastingMode.Off, true, gameObject.layer)
 ```
 
 ---
 
-## RT (RenderTexture) Allocation Strategy
+## 3. Shader Implementation
 
-Regarding RT allocation, you need to choose an appropriate strategy based on actual requirements:
+This shader handles shell expansion in the vertex stage and noise-based alpha clipping in the fragment stage, with full PBR lighting support.
 
-### Allocate vs Shared RT
-
-**When to use Allocate (dedicated RT)**:
-- Need to pass data between different Passes
-- Need to preserve intermediate results for subsequent use
-- Effect requires multiple iterative calculations
-
-**When to use Shared RT**:
-- Only used within the current Pass
-- Can save memory overhead
-- No need to pass data between multiple Passes
-
-### Implementation
-In our fog implementation, we use temporary RT:
-
-```csharp
-public override void Configure(CommandBuffer cmd, RenderTextureDescriptor cameraTextureDescriptor)
-{
-    cmd.GetTemporaryRT(tempTexture.id, cameraTextureDescriptor);
-}
-
-public override void FrameCleanup(CommandBuffer cmd)
-{
-    cmd.ReleaseTemporaryRT(tempTexture.id);
-}
-```
-
-This approach releases RT at the end of each frame, suitable for simple post-processing effects.
-
----
-
-### Shader Core Logic
-
+### Vertex Shader — Shell Expansion & Curly
+Each shell is offset along the object-space normal based on `_FurStep`:
 ```hlsl
-// Reconstruct world position from depth
-float3 worldPos = ReconstructWorldPosition(i.uv, depth);
-
-// Calculate fog distance
-float fogDistance = max(0.0, linearDepth - _FogStartDistance);
-fogDistance = min(fogDistance, _FogMaxDistance);
-
-// Calculate height factor (key: exponential decay)
-float heightFactor = max(0.0, (_FogHeight - worldPos.y) * _FogHeightFalloff);
-float fogDensity = _FogDensity * exp(-heightFactor);
-
-// Final fog intensity
-float fogFactor = 1.0 - exp(-fogDensity * fogDistance);
-fogFactor = saturate(fogFactor);
+half3 positionOffset = furStep * _FurLength * input.normalOS.xyz;
+input.positionOS.xyz += positionOffset;
 ```
 
-### Key Technical Points
+A curl effect is applied using a rotation matrix driven by a noise-based random seed:
+```hlsl
+half noise = SAMPLE_TEXTURE2D_LOD(_FurControlMap1, sampler_FurControlMap1, 
+    input.texcoord * _FurThinness1, 0).r;
+half3 curlVector = FurCurl(input.normalOS, input.tangentOS, _CurlFactor, noise, furStep, _CurlRadius);
+input.positionOS.xyz += curlVector * _FurLength * furStep;
+```
 
-1. **Depth Reconstruction**: Use `SampleSceneDepth()` and `LinearEyeDepth()` to obtain scene depth
-2. **World Position Reconstruction**: Recover world space position from depth through inverse projection matrix
-3. **Exponential Decay**: Use `exp(-heightFactor)` to implement height-related density attenuation
-4. **Distance Control**: Control fog range through `_FogStartDistance` and `_FogMaxDistance`
-
-### Property Definitions
-![Fog Settings](/post-img/exponential-height-fog-post-processing/SettingCapture.png)
-
-```csharp
-[System.Serializable]
-public class FogSettings
+The `FurCurl` function rotates the tangent vector around the normal using a per-strand random angle:
+```hlsl
+float3 FurCurl(float3 normal, float3 tangent, float frequence, float id, float curlAmount, float curlRadius)
 {
-    public Color fogColor = new Color(0.5f, 0.6f, 0.7f, 1.0f);
-    [Range(0, 0.1f)] public float fogDensity = 0.01f;
-    [Range(0, 0.1f)] public float fogHeightFalloff = 0.01f;
-    [Range(0, 100)] public float fogStartDistance = 10f;
-    public float fogHeight = 0f;
-    public float fogMaxDistance = 500f;
+    float random = RND(id);
+    return mul(rotationMatrix(normal, 2 * 3.14159 * frequence * curlAmount * random), 
+        float4(tangent, 0) * curlRadius * 0.1 * (random - frequence));
 }
 ```
 
-| Parameter | Purpose | Recommended Range |
-|-----------|---------|-------------------|
-| `fogColor` | Fog color | - |
-| `fogDensity` | Base fog density | 0.001 - 0.1 |
-| `fogHeightFalloff` | Height decay rate | 0.001 - 0.1 |
-| `fogStartDistance` | Fog start distance | 0 - 100 |
-| `fogHeight` | Fog base height | Set according to scene |
-| `fogMaxDistance` | Maximum fog distance | 100 - 1000 |
+### Fragment Shader — Alpha Clipping
+Two noise textures are sampled and combined to define strand shapes. Alpha is computed by subtracting the squared `furStep` from the noise, creating a natural taper toward the tips:
+```hlsl
+half noise1 = SAMPLE_TEXTURE2D(_FurControlMap1, sampler_FurControlMap1, input.uv * _FurThinness1);
+half noise2 = SAMPLE_TEXTURE2D(_FurControlMap2, sampler_FurControlMap2, input.uv * _FurThinness2);
+half noise = max(noise1, noise2);
+half alpha = saturate(noise - (furStep * furStep));
+```
+PBR lighting is then calculated using the sampled BaseColor, MetallicSmoothness, NormalMap, and OcclusionMap textures.
+---
+
+## 4. Adjustable Parameters
+
+![Parameters](/post-img/exponential-height-fog-post-processing/Fog.gif)
 
 ---
 
-## Key Implementation Notes
+## 5. Advantages & Disadvantages
 
-### Performance Optimization
+### Advantages
 
-- Perform camera type checks in `AddRenderPasses` to avoid unnecessary rendering
-- Use temporary RT instead of persistent RT to reduce memory usage
-- Properly set `renderPassEvent` to avoid conflicts with other effects
+- Simple to implement — no geometry shader or complex mesh generation required
+- Easy to control — all parameters are exposed and adjustable in real time
+- GPU Instancing — all layers share one material and are batched efficiently
+- Compatible with any mesh — works on both static and skinned meshes
 
-### Depth Sampling Configuration
+### Disadvantages
 
-Ensure Depth Texture is enabled in URP Asset:
-```
-URP Asset → General → Depth Texture: Enabled
-```
+- Short fur only — the shell method breaks down visually for long fur, as gaps between layers become visible from grazing angles
+- Transparency overdraw — every shell layer uses alpha blending, which causes significant overdraw and can be expensive on complex meshes
+- Limited mobile support — 20-30 layers is acceptable on PC, but should be reduced to 5-10 layers or fewer for mobile platforms
 
-### Coordinate System Considerations
+---
 
-When reconstructing world coordinates, note:
-- UV start position may differ across platforms (use `UNITY_UV_STARTS_AT_TOP` macro)
-- NDC coordinate range is [-1, 1]
-- Need to consider projection matrix differences
+## 6. Other Fur Rendering Approaches
+
+- Geometry-based Fur (Real Modeling) 
+Artists manually model individual fur strands or clumps directly into the mesh. This produces the highest quality results but is expensive in terms of polygon count and artist time. Best suited for hero characters in cinematics.
+
+- Fin / Card-based Fur 
+Thin polygonal cards (fins) are inserted perpendicular to the surface, with a fur texture applied with alpha clipping. This approach handles long fur and silhouettes much better than shell-based methods, and is more performance-friendly. Widely used in real-time games for animals and characters with longer fur.
