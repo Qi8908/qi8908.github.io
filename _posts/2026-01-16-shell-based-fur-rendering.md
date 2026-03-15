@@ -16,7 +16,7 @@ The core idea is to render multiple layers (shells) of the same mesh, each offse
 ---
 
 ## Fur Preview
-![Fur Preview](/post-img/exponential-height-fog-post-processing/Fog.gif)
+![Fur Preview](/post-img/shell-based-fur-rendering/Preview.gif)
 
 ---
 
@@ -117,7 +117,7 @@ PBR lighting is then calculated using the sampled BaseColor, MetallicSmoothness,
 
 ## 4. Adjustable Parameters
 
-![Parameters](/post-img/exponential-height-fog-post-processing/Fog.gif)
+![Parameters](/post-img/shell-based-fur-rendering/Parameters.png)
 
 ---
 
