@@ -117,7 +117,9 @@ PBR lighting is then calculated using the sampled BaseColor, MetallicSmoothness,
 
 ## 4. Adjustable Parameters
 
-![Parameters](/post-img/shell-based-fur-rendering/Parameters.png)
+FurControlMap, FurLength, FurThinness, CurlFactor, CurlRadius, Color
+
+![Parameters](/post-img/shell-based-fur-rendering/Parameters.gif)
 
 ---
 
