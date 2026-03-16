@@ -2,7 +2,7 @@
 title: Plant Rendering with Wind Shader
 date: 2025-09-28 15:00:00 +0800
 categories: [Graphics, Shader]
-image: "/post-img/plant-rendering-with-wind-shader/Plant_compressed.gif"
+image: "/post-img/plant-rendering-with-wind-shader/Plant.gif"
 tags: [Unity, Wind Shader, Vegetation]
 published: true
 ---
@@ -36,7 +36,7 @@ The system excels in open-world game vegetation systems, architectural visualiza
 
 ## Visual Result
 
-![Plant Wind Animation](/post-img/plant-rendering-with-wind-shader/Plant_compressed.gif)
+![Plant Wind Animation](/post-img/plant-rendering-with-wind-shader/Plant.gif)
 
 ## Core Technical Features
 
