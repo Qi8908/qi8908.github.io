@@ -9,7 +9,7 @@ published: true
 ---
 
 ## Opaque Ice Preview
-![Ice Rendering Preview](/post-img/ice-shader/OpaqueIce.gif)
+![Ice Rendering Preview](/post-img/ice-shader/opaque.gif)
 
 ---
 
@@ -117,7 +117,7 @@ Maps normal directions to UV coordinates to sample a spherical map, simulating e
 ---
 
 ## Transparent Ice Preview
-![Transparent Ice Preview](/post-img/ice-shader/TransparentIce.gif)
+![Transparent Ice Preview](/post-img/ice-shader/Transparent.gif)
 
 ---
 
