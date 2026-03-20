@@ -19,7 +19,7 @@ In Unity's Universal Render Pipeline (URP), RenderFeature enables custom post-pr
 ---
 
 ## Fog Preview
-![Fog Preview](/post-img/exponential-height-fog-post-processing/Fog.gif)
+![Fog Preview](/post-img/exponential-height-fog-post-processing/Preview.gif)
 
 ---
 
