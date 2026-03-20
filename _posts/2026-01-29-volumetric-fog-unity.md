@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Volumetric Fog in Unity URP"
+title: "Unity URP Volumetric Fog"
 date: 2026-01-29
 categories: [Graphics, Unity]
-image: "/post-img/shell-based-fur-rendering/Cover.png"
+image: "/post-img/volumetric-fog-unity/Cover.png"
 tags: [Unity, URP, VolumetricFog]
 published: true
 ---
