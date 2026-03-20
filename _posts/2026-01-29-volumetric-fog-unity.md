@@ -22,7 +22,12 @@ The core technique involves:
 ---
 
 ## Fog Preview
-![Fog Preview](/post-img/shell-based-fur-rendering/Preview.gif)
+![Fog Preview](/post-img/volumetric-fog-unity/Preview.gif)
+
+---
+
+## Adjustable Parameters
+![Adjustable Parameters](/post-img/volumetric-fog-unity/Parameters.png)
 
 ---
 
