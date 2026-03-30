@@ -3,13 +3,13 @@ layout: post
 title: "Ice Shader: Opaque & Transparent"
 date: 2025-11-08
 categories: [Graphics, Shader]
-image: "/post-img/ice-shader/Cover.png"
+image: "/post-img/ice-shader/Cover2.png"
 tags: [Unity, Ice Shader, SSS]
 published: true
 ---
 
 ## Opaque Ice Preview
-![Ice Rendering Preview](/post-img/ice-shader/opaque.gif)
+![Ice Rendering Preview](/post-img/ice-shader/Elephant1.gif)
 
 ---
 
@@ -117,7 +117,7 @@ Maps normal directions to UV coordinates to sample a spherical map, simulating e
 ---
 
 ## Transparent Ice Preview
-![Transparent Ice Preview](/post-img/ice-shader/Transparent.gif)
+![Transparent Ice Preview](/post-img/ice-shader/Elephant2.gif)
 
 ---
 
