@@ -3,7 +3,7 @@ layout: post
 title: "Maya Asset Manager Plug-in"
 date: 2026-02-27
 categories: [Maya, Plugin]
-image: "post-img/maya-asset-manager-plugin/Cover.png"
+image: "post-img/maya-asset-manager-plugin/Cover2.png"
 tags: [Maya, Python, Plugin]
 published: true
 ---
@@ -27,15 +27,23 @@ So I decided to build my own asset manager — one with thumbnail previews for a
 
 ## UI Design
 
+![UI Draft](post-img/maya-asset-manager-plugin/Draft.png)
+
 The interface is built with PySide6 and adopts a frameless dark theme to blend naturally with Maya's native UI style.
 
-The layout is divided into three panels. The left panel is a folder tree navigator that reflects the actual directory structure of the registered asset libraries, allowing quick browsing by category. The centre panel displays assets as a thumbnail grid, with the item count shown at the bottom and a size slider for adjusting thumbnail scale. A search bar in the top-right supports filtering by asset name or tag. The right panel serves as an inspector, showing metadata for the selected asset including name, format, file size, date, renderer, path, and tags, alongside Capture and Upload buttons for setting the asset thumbnail.
+The layout is divided into three panels. The left panel is a folder tree navigator that reflects the actual directory structure of the registered asset libraries, allowing quick browsing by category. 
+
+The centre panel displays assets as a thumbnail grid, with the item count shown at the bottom and a size slider for adjusting thumbnail scale. A search bar in the top-right supports filtering by asset name or tag. 
+
+The right panel serves as an inspector, showing metadata for the selected asset including name, format, file size, date, renderer, path, and tags, alongside Capture and Upload buttons for setting the asset thumbnail.
 
 The Publish button in the top bar opens the export dialog, which provides options for format, proxy, texture, and thumbnail settings before committing the asset to the library.
 
 ---
 
 ## Data Structure Design
+
+![Directory Structure](post-img/maya-asset-manager-plugin/DirectoryStructure.png)
 
 The data structure needs to serve two purposes: persist asset information on disk so it survives between sessions, and provide fast in-memory access during browsing.
 
