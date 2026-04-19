@@ -35,6 +35,54 @@ The Publish button in the top bar opens the export dialog, which provides option
 
 ---
 
+## Data Structure Design
+
+The data structure needs to serve two purposes: persist asset information on disk so it survives between sessions, and provide fast in-memory access during browsing.
+
+Config File: A single JSON file at ~/.maya_asset_manager_config.json stores the global settings — registered library paths and appearance preferences. This means the plugin remembers your libraries across Maya sessions without touching the project files.
+
+```python
+{
+    "libraries": [
+        "D:/Assets/Models",
+        "D:/Assets/HDR"
+    ],
+    "appearance": {
+        "font_family": "Microsoft YaHei",
+        "font_size": 12,
+        "show_folder_icons": true
+    }
+}
+```
+
+Per-Asset Metadata: Each asset has a sidecar _meta.json file stored alongside it on disk. This keeps the metadata co-located with the asset, so moving or copying a folder preserves all its information.
+
+```python
+{
+    "display_name": "Fountain",
+    "tags": ["prop", "outdoor", "stone"],
+    "renderer": "redshift",
+    "icon_path": null
+}
+```
+
+In-Memory Asset Dict: When scanning, each asset is loaded into a dictionary and stored in a list. The UI reads directly from this list, and clicking an item retrieves its data by key:
+
+```python
+asset = {
+    "name": "Fountain",
+    "original_name": "Fountain",
+    "path": "D:/Assets/Models/Fountain/Fountain.ma",
+    "thumbnail": "D:/Assets/Models/Fountain/Fountain.jpg",
+    "tags": ["prop", "outdoor"],
+    "renderer": "redshift"
+}
+```
+
+This flat dictionary approach keeps the scanning and display logic simple — the folder tree in the UI reflects the actual directory structure on disk, so reorganising assets is just a matter of moving folders and rescanning.
+
+---
+
 ## Implementation Details
 
 ### 1. Recursive Asset Scanning with Thumbnail Resolution
