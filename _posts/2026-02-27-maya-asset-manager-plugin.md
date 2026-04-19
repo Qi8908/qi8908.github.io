@@ -3,7 +3,7 @@ layout: post
 title: "Maya Asset Manager Plug-in"
 date: 2026-02-27
 categories: [Maya, Plugin]
-image: "post-img/maya-asset-manager-plugin/Cover3.png"
+image: "post-img/maya-asset-manager-plugin/Cover4.png"
 tags: [Maya, Python, Plugin]
 published: true
 ---
