@@ -39,41 +39,17 @@ English, Chinese
 - Optimized game publishing strategies through SQL-based user behavior analysis and BI visualization (Tableau, Power BI), improving platform engagement metrics across multiple game titles
 - Built content evaluation frameworks achieving 52.8% completion rates, 3.2% CTR, and 30% YoY growth in daily viewership through data-driven KPI optimization strategies
 
-### Kuaishou Technology
-**Game Content Manager** | Beijing, China | Sep 2019 – Jun 2020
-
-- Discovered and introduced nearly 100 PUGC influencers including key individual game influencers and well-known game MCN groups
-- Managed high-profile gaming live and events including NetEase Fantasy Westward Journey X9 League, 2019 BlizzCon, and 2019 League of Legends World Championship
-- Partnered with multiple game distribution platforms and producers to promote new titles, including PlayStation's Monkey King: Hero is Back, and TapTap mobile games (Juicy Realm, Ulala: Idle Adventure, Elemental Dungeon)
-
 ### Xiaomi Technology
 **Game Content Manager** | Beijing, China | Jun 2018 – Aug 2019
 
 - Managed content operations producing weekly recommendation series with 8%-23% download conversion rates while aggregating 3,000+ daily content items
 - Led UGC campaigns generating 200+ quarterly submissions and achieved 5M+ push notification reach through cross-platform collaboration
-
-### Momo Technology
-**Game Designer** | Beijing, China | Jan 2015 – May 2018
-
-- Managed daily operations for operation-oriented and business simulation mobile games including MoMo Audition, Leisure Westward Journey, and Fantasy House
-- Analyzed user data and feedback to identify product operation and R&D issues, proposing and implementing optimal solutions that improved player retention and engagement
   
 ### Amazing Seasun Game
 **Game Designer** | Zhuhai, China | Aug 2012 – Dec 2014
 
 - Created comprehensive narrative content for JX Online 3 including 17 core map designs with integrated environmental storytelling and character dialogue systems
 - Designed 4 content editing systems (life skills, icon, skill, NPC editors) while collaborating with art/music teams on technical requirement documentation
-
-## PROJECT
-
-### The Murder at Qingliu Manor
-**Game Developer** | Galway, Ireland | Sep 2024 – Present
-
-Designed and developed a visual novel adventure game in Unity (C#), featuring interactive storytelling, character dialogue systems, branching narrative paths, and dynamic UI elements. Implemented save/load functionality, character management systems, and immersive visual effects to enhance player engagement and narrative experience.
-
-**Tools:** Unity, C#, Git, Dotween, Visual Studio, Adobe Photoshop  
-**Play Game:** [https://pumpkincaptain.itch.io/the-murder-at-qingliu-manor-windows](https://pumpkincaptain.itch.io/the-murder-at-qingliu-manor-windows)
-
 
 ## EDUCATION
 
@@ -83,17 +59,3 @@ University of Galway, Ireland | 2023-2025 (First Class Honours)
 **BA, Journalism and Communication**  
 Hunan University, China | 2008-2012 (First Class Honours)
 
-
-## NOTABLE PROJECTS & PLATFORMS
-
-**[JX Online 3](https://jx3.seasungames.cn/?utm_source=jd#/)**  
-China's leading MMORPG with 10M+ monthly active users and $7.2B annual revenue (2024)
-
-**[Xiaomi Game Community](https://game.xiaomi.com/)**  
-Multi-platform gaming distribution hub serving 120M daily active users with $5.8B annual gaming revenue (¥42B)
-
-**[Moonlight Blade Mobile](https://ty.qq.com/main.html#season)**  
-Premium mobile MMORPG with 45M+ registered users and peak monthly revenue of $500M
-
-**[Tencent Game Community](https://syzs.qq.com/)**  
-Tencent official gaming social platform with 1.88M registered users and 310K monthly active users
