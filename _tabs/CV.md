@@ -12,22 +12,21 @@ order: 4
 
 ## SUMMARY
 
-**Gaming Industry Experience:** Rich experience in gaming industry, including game publishing at Tencent & Xiaomi official game community and narrative design for online/mobile games (JX Online 3: 10M+ MAU, $7.2B annual revenue; Moonlight Blade Mobile: 45M+ registered users, peak monthly revenue of $500M).
+**Mathematics & Rendering Foundations:** Solid grounding in linear algebra and trigonometry as applied to real-time rendering, with a practical understanding of 3D rendering pipelines.
 
-**Technical Art & Material Creation:** Developed advanced shader programming and game material production skills through Unity URP optimization, procedural texture workflows and PBR material (Substance Designer, Marmoset Toolbag 5).
+**Technical Art & Shader Development:** Proficient in HLSL shader authoring within Unity URP and Unreal Engine material systems, with hands-on experience in Unity 6 and UE5 including Blueprint scripting and the UE material graph; skilled in procedural texture workflows using Substance Designer.
 
-**Game Development Expertise:** Developed practical skills in game development technologies (Unity 6, Unreal 5), focusing on interactive gameplay systems and rendering.
+**Python Tooling & Software Development:** Strong Python development skills with a focus on maintainable code architecture; built production-oriented DCC tools including a PySide6-based Maya asset management plugin and Unreal Engine pipeline utilities, with additional experience in C# and C++.
+
+**Procedural Generation:** Experienced in PCG workflows across Unreal Engine 5 (PCG framework) and Houdini, including HDA development and integration with real-time engines.
 
 ## TECHNICAL SKILLS
 
-**Game Development & Programming**  
-Proficient in Unity and C# for interactive gameplay systems, player mechanics, and technical art implementation.
+**Programming & Scripting**  
+Python, HLSL, C#, C++, Blueprint (Unreal Engine 5)
 
-**Technical Art & Visual Effects**  
-Hands-on experience with HLSL shader development and material creation. Skilled in Unity URP pipeline optimization and cross-platform rendering solutions.
-
-**Software & Tools**  
-Unity, Unreal Engine, Substance Designer, Adobe Photoshop, Adobe Premiere, Blender，Marmoset Toolbag
+**DCC & Engine Software**  
+Maya, Houdini, Substance Designer, Unity 6, Unreal Engine 5, Marmoset Toolbag, Adobe Photoshop, Adobe Premiere,
 
 **Languages**  
 English, Chinese
