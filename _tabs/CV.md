@@ -5,7 +5,7 @@ order: 4
 ---
 
 # QI REN, MSC
-### Game Designer & Technical Artist
+### Technical Artist
 **Contact:** +353(87) 471 2776 | rachelberlin1989@gmail.com  
 **LinkedIn:** [www.linkedin.com/in/qi-ren-06440324b](https://www.linkedin.com/in/qi-ren-06440324b)  
 **Portfolio:** [https://qi8908.github.io/](https://qi8908.github.io/)
@@ -26,7 +26,7 @@ order: 4
 Python, HLSL, C#, C++, Blueprint (Unreal Engine 5)
 
 **DCC & Engine Software**  
-Maya, Houdini, Substance Designer, Unity 6, Unreal Engine 5, Marmoset Toolbag, Adobe Photoshop, Adobe Premiere,
+Maya, Houdini, Substance Designer, Unity 6, Unreal Engine 5, Marmoset Toolbag, Adobe Photoshop, Adobe Premiere
 
 **Languages**  
 English, Chinese
