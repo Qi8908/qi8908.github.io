@@ -20,7 +20,7 @@ Below are the five parts of the pipeline that involved the most problem-solving.
 
 ##  Lighting System: Custom Lambert Lighting
 
-UE's built-in lighting is PBR-based, with parameters that are fixed and hard to adjust — not well suited for the hard-edged shadows that cartoon rendering usually wants. So instead of using the engine's native lighting, this project implements a custom Lambert lighting setup using material nodes.
+UE built-in lighting is PBR-based, with parameters that are fixed and hard to adjust — not well suited for the hard-edged shadows that cartoon rendering usually wants. So instead of using the engine's native lighting, this project implements a custom Lambert lighting setup using material nodes.
 
 The approach is to take the dot product of the vertex normal (VertexNormalWS) and the sky light direction (SkyAtmosphereLightDirection), which gives a value representing light intensity. This value is continuous, so used directly it produces soft shadow edges — not what cartoon rendering is going for. To fix that, the value is fed into a custom curve (CurveLinearColor), and the shape of the curve controls how hard or soft the shadow edge is: a steeper slope gives a sharper light/shadow boundary, a gentler slope gives a softer transition. Two additional parameters, ShadowSmooth and ShadowOffset, control shadow sharpness and shadow offset respectively.
 
