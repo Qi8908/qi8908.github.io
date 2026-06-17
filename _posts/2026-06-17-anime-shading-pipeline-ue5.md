@@ -37,10 +37,11 @@ Calculating highlights on a normal surface relies on the surface normal, but hai
 The approach here is to substitute the view direction V (the vector from the model toward the camera) for the normal N, and manually build a tangent space coordinate system from there (the N axis is replaced by V, then crossed to get the tangent T and bitangent B — the cross product order matters, since getting it wrong flips the direction of the resulting coordinate system). Once this coordinate system is computed, the result is remapped to the [0, 1] range and used as the UV coordinate to sample a MatCap texture.
 
 ![Matcap](post-img/anime-shading-pipeline-ue5/Matcap.png)
+![Matcap](post-img/anime-shading-pipeline-ue5/HairPanel.png)
 
 This makes the highlight position shift with the camera angle, producing the kind of viewer-dependent highlight sliding seen in typical anime hair rendering, rather than a fixed highlight that doesn't react to viewing angle.
 
-![Hair Rendering](post-img/anime-shading-pipeline-ue5/Matcap.png)
+![Hair Rendering](post-img/anime-shading-pipeline-ue5/HairHighlights.gif)
 
 ---
 
