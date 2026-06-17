@@ -3,7 +3,7 @@ layout: post
 title: "Making 3D Look 2D: An Anime Shading Pipeline in UE5"
 date: 2026-06-17
 categories: [Unreal, Shading]
-image: "post-img/anime-shading-pipeline-ue5/Cover.png"
+image: "post-img/anime-shading-pipeline-ue5/Cover2.png"
 tags: [cartoon-shading, material-graph, sdf]
 published: true
 ---
@@ -12,7 +12,7 @@ published: true
 
 This post walks through the toon shading pipeline I built in UE5 for an anime-style character render. The goal was to take a fully 3D character model and make it read as a flat, 2D illustration — which meant working against several things the engine does by default: physically based lighting, perspective distortion, and highlight behavior that assumes a "normal" surface.
 
-![Final Render](post-img/maya-asset-manager-plugin/Draft.png)
+![Final Render](post-img/anime-shading-pipeline-ue5/Overview.gif)
 
 Below are the five parts of the pipeline that involved the most problem-solving. A full project write-up with the complete material graph and a demo video is linked at the end.
 
