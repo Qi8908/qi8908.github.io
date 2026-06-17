@@ -56,7 +56,7 @@ The fix is to apply a vertex offset in the material using WPO (World Position Of
 
 Tuning FOV_Fix takes some back and forth: too weak and there's no visible effect, too strong and the model starts to deform. It needs to be adjusted while watching the result as the camera moves.
 
-![WPO](post-img/anime-shading-pipeline-ue5/WPO2.png)
+![WPO](post-img/anime-shading-pipeline-ue5/WPO.gif)
 
 ---
 
@@ -94,6 +94,8 @@ The last piece was making the shadow respond to light direction in real time: a 
 ![BP SDF](post-img/anime-shading-pipeline-ue5/BP_SDF.png)
 
 Along the way, the shadow direction turned out to be mirrored (fixed by removing an extra 1-x node), and the timing of the shadow shift didn't match the timing of the light rotation (fixed by adding a remapping curve, CB_SDF_Mapped) — both were adjusted after comparing results visually.
+
+![Face Shadow](post-img/anime-shading-pipeline-ue5/FaceShadow.gif)
 
 ---
 
