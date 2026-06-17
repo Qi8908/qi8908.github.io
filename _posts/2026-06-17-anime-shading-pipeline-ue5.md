@@ -112,3 +112,5 @@ Each vertex's vector to the camera is then dotted with these two axes, giving th
 ![Set Up Falloff Coefficient](post-img/anime-shading-pipeline-ue5/DynamicFocus2.png)
 
 Finally, the focus bone's world position (the fist or chest) is passed to the material parameter collection every frame through the character blueprint's Tick event, so the focus point updates in real time as the animation plays, instead of staying fixed.
+
+![Dynamic Focus Perspective](post-img/anime-shading-pipeline-ue5/Punch.png)
