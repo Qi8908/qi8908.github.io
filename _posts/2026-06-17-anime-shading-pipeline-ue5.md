@@ -3,7 +3,7 @@ layout: post
 title: "Making 3D Look 2D: An Anime Shading Pipeline in UE5"
 date: 2026-06-17
 categories: [Unreal, Shading]
-image: "post-img/maya-asset-manager-plugin/Cover4.png"
+image: "post-img/anime-shading-pipeline-ue5/Cover.png"
 tags: [cartoon-shading, material-graph, sdf]
 published: true
 ---
