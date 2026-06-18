@@ -2,9 +2,9 @@
 layout: post
 title: "Making 3D Look 2D: An Anime Shading Pipeline in UE5"
 date: 2026-06-17
-categories: [Unreal, Shading]
+categories: [Unreal, Shader]
 image: "post-img/anime-shading-pipeline-ue5/Cover2.png"
-tags: [cartoon-shading, material-graph, sdf]
+tags: [cartoon-shading, wpo, sdf]
 published: true
 ---
 
