@@ -1,7 +1,7 @@
 ---
 title: "Special Material Collections"
 date: 2025-08-05 15:00:00 +0800
-categories: [Graphics, Shader]
+categories: [Unity, Unreal, Shader]
 image: "/post-img/magic-mirror-depth-stencil-testing/magic-mirror.gif"
 tags: [Unity, Stencil Buffer, Lava Shader]
 published: true
