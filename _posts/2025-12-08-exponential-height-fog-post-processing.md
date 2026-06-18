@@ -2,7 +2,7 @@
 layout: post
 title: "Unity Post-Processing: Exponential Height Fog"
 date: 2025-12-08
-categories: [Shader]
+categories: [Shader, Unity]
 image: "/post-img/exponential-height-fog-post-processing/Cover.png"
 tags: [Unity, Fog Rendering, Post-Processing]
 published: true
