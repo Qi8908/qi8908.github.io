@@ -10,11 +10,13 @@ published: true
 
 ## Why Need
 
-During my personal project, I found myself accumulating a growing number of Maya assets — models, HDR environments, Alembic caches — scattered across different folders on disk. Every time I wanted to reuse something, I had to dig through File Explorer, open the file just to check what was inside, and then import it manually.
+When working in Maya, assets — models, HDR environments, Alembic caches — tend to accumulate across different folders on disk. Every time I wanted to reuse something, I had to dig through File Explorer, open the file just to check what was inside, and then import it manually.
 
 Maya's built-in Content Browser does help, but its preview is limited to a fixed set of image and scene formats, with no support for HDR, EXR, or Alembic files. It also has no tag system — search only works by filename within the current folder.
 
 So I decided to build my own asset manager — one with thumbnail previews for all the formats I actually use, a tag system for quick filtering, and a one-click publish workflow that captures a viewport screenshot and stores everything in a clean folder structure.
+
+All the models shown in this post were downloaded for free from Fab.
 
 ---
 
