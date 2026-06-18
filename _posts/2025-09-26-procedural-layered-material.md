@@ -1,7 +1,7 @@
 ---
 title: Layered Material Implementation
 date: 2025-09-26 15:00:00 +0800
-categories: [Unity, Shader]
+categories: [Shader]
 image: "/post-img/procedural-layered-material/BlendFinal.gif"
 tags: [Unity, Layered Material]
 published: true
