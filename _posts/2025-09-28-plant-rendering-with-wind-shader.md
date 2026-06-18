@@ -1,9 +1,9 @@
 ---
 title: Plant Rendering with Wind Shader
 date: 2025-09-28 15:00:00 +0800
-categories: [Graphics, Shader]
+categories: [Unity, Shader]
 image: "/post-img/plant-rendering-with-wind-shader/Plant.gif"
-tags: [Unity, Wind Shader, Vegetation]
+tags: [Unity, Wind Shader, Plant Rendering]
 published: true
 ---
 
