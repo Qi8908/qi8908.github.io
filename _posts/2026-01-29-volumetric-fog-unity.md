@@ -2,7 +2,7 @@
 layout: post
 title: "Unity URP Volumetric Fog"
 date: 2026-01-29
-categories: [Shader]
+categories: [Shader, Unity]
 image: "/post-img/volumetric-fog-unity/Cover.png"
 tags: [Unity, Fog Rendering]
 published: true
