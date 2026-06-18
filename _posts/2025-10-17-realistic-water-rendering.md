@@ -2,9 +2,9 @@
 layout: post
 title: "Realistic Water Rendering"
 date: 2025-10-07
-categories: [Unity, Shader]
+categories: [Shader]
 image: "/post-img/realistic-water-rendering/WaterRender.jpg"
-tags: [Unity, Water Shader]
+tags: [Unity, Water Rendering]
 published: true
 ---
 
