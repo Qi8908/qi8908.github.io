@@ -17,7 +17,7 @@ This Post is a collection of special materials, VFX, scene components, etc.
 
 ![Magic Mirror](/post-img/magic-mirror-depth-stencil-testing/magic-mirror.gif)
 
-## Lava Shader
+## Lava Shader 
 
 ![Lava Shader](/post-img/magic-mirror-depth-stencil-testing/Lava2.gif)
 
