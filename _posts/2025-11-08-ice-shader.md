@@ -2,9 +2,9 @@
 layout: post
 title: "Ice Shader: Opaque & Transparent"
 date: 2025-11-08
-categories: [Graphics, Shader]
+categories: [Shader]
 image: "/post-img/ice-shader/Cover3.png"
-tags: [Unity, Ice Shader, SSS]
+tags: [Unity, Ice Rendering, SSS]
 published: true
 ---
 
