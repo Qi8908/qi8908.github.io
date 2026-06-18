@@ -1,7 +1,7 @@
 ---
 title: Custom PBR Shader Implementation
 date: 2025-09-26 15:00:00 +0800
-categories: [Shader]
+categories: [Shader, Unity]
 tags: [Unity, PBR, BRDF]
 image: /post-img/implementing-custom-brdf-shader/Cover1.png
 ---
