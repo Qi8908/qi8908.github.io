@@ -2,7 +2,7 @@
 layout: post
 title: "URP Shell-based Fur Rendering"
 date: 2026-01-16
-categories: [Shader]
+categories: [Shader, Unity]
 image: "/post-img/shell-based-fur-rendering/Cover.png"
 tags: [Unity, Fur Rendering]
 published: true
