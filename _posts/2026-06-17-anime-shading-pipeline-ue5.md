@@ -1,16 +1,17 @@
 ---
 layout: post
-title: "Making 3D Look 2D: An Anime Shading Pipeline in UE5"
+title: "Making 3D Look 2D: An Toon Shading Pipeline in UE5"
 date: 2026-06-17
 categories: [Shader, Unreal]
 image: "post-img/anime-shading-pipeline-ue5/Cover2.png"
-tags: [Unreal, Anime-Shading, WPO, SDF]
+tags: [Unreal, Toon-Shading, WPO, SDF]
 published: true
 ---
 
 ## Overview
 
-This post walks through the toon shading pipeline I built in UE5 for an anime-style character render. The goal was to take a fully 3D character model and make it read as a flat, 2D illustration — which meant working against several things the engine does by default: physically based lighting, perspective distortion, and highlight behavior that assumes a "normal" surface.
+This post walks through the toon shading pipeline I built in UE5 for an anime-style character render. The goal was to take a fully 3D character model and make it read as a flat, 2D illustration — which meant working against several things the engine does by default: physically based lighting, perspective distortion, and highlight behavior that assumes a "normal" surface. This is a form of NPR (non-photorealistic rendering), 
+specifically toon/cel shading aimed at replicating a 2D anime art style.
 
 ![Final Render](post-img/anime-shading-pipeline-ue5/Overview.gif)
 
