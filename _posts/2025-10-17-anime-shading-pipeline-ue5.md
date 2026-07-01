@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Making 3D Look 2D: An Toon Shading Pipeline in UE5"
-date: 2026-06-17
+date: 2025-10-17
 categories: [Shader, Unreal]
 image: "post-img/anime-shading-pipeline-ue5/Cover2.png"
 tags: [Unreal, Toon-Shading, WPO, SDF]
